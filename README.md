@@ -1,14 +1,11 @@
 # petapp
 
 ###### required environment
-
 Flutter 3.7.1
 
 Dart 2.19.1
 
 DevTools 2.20.1
-
-A new Flutter project.
 
 ## Getting Started
 
