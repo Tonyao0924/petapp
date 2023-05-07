@@ -17,7 +17,7 @@ class _SignInForm extends State<SignInForm> {
           controller: emailController,
           decoration: InputDecoration(
             filled: true,
-            prefixIcon: const Icon(Icons.email_outlined, size: 30, color: Colors.grey),
+            prefixIcon: const Icon(Icons.email_outlined, size: 30, color: Colors.orange),
             fillColor: Colors.white10,
             hintText: 'Email',
             labelText: 'Email',
@@ -58,14 +58,16 @@ class _SignInForm extends State<SignInForm> {
             suffixIcon: IconButton(
                 icon: Icon(_isObscure3
                     ? Icons.visibility
-                    : Icons.visibility_off),
+                    : Icons.visibility_off,
+                  color: Colors.orange,
+                ),
                 onPressed: () {
                   setState(() {
                     _isObscure3 = !_isObscure3;//關閉開啟obscureText
                   });
                 }),
             filled: true,
-            prefixIcon: const Icon(Icons.lock, size: 30, color: Colors.grey),
+            prefixIcon: const Icon(Icons.lock, size: 30, color: Colors.orange),
             fillColor: Colors.white10,
             hintText: 'Password',
             labelText: 'Password',
@@ -111,7 +113,7 @@ class _SignInForm extends State<SignInForm> {
           },
           child: const Text(
             '忘記密碼?',
-            style: TextStyle(color: Colors.grey, fontSize: 12),
+            style: TextStyle(color: Colors.orange, fontSize: 12),
           ),
         ),
         SizedBox(height: 40,),
