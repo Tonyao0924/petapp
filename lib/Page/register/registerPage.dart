@@ -9,7 +9,6 @@ class RegisterDialog {
     SignInDialog signInDialog = SignInDialog();
     signInDialog.showSignInDialog(context);
   }
-
   void showSignInDialog(BuildContext context) {
     showGeneralDialog(
       context: context,

@@ -5,7 +5,6 @@ class RegisterForm extends StatefulWidget {
   @override
   State<RegisterForm> createState() => _RegisterForm();
 }
-
 class _RegisterForm extends State<RegisterForm> {
   bool _isObscure3 = true;
   TextEditingController emailController = TextEditingController();

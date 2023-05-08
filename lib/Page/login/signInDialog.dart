@@ -6,7 +6,6 @@ import 'signInForm.dart';
 import 'package:petapp/Page/register/registerPage.dart';
 
 class SignInDialog {
-  //
   void _showRegisterDialog(BuildContext context){
     RegisterDialog registerDialog = RegisterDialog();
     registerDialog.showSignInDialog(context);
