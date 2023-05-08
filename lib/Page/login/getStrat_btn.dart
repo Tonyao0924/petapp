@@ -12,7 +12,6 @@ class _GetStart extends State<GetStart> {
   void _showSignInDialog(BuildContext context) {
     signInDialog.showSignInDialog(context);
   }
-
   @override
   Widget build(BuildContext context) {
     return Container(

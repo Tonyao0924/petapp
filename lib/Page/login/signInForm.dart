@@ -8,7 +8,6 @@ class _SignInForm extends State<SignInForm> {
   bool _isObscure3 = true;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-
   @override
   Widget build(BuildContext context){
     return Column(
