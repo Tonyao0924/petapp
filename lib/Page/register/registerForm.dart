@@ -10,10 +10,11 @@ class _RegisterForm extends State<RegisterForm> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController nameController = TextEditingController();
-
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Column(
+      key: _formKey,
       children: [
         TextFormField(
           controller: nameController,
