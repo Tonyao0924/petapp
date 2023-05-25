@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:petapp/utils/riveUtils.dart';
 import 'package:rive/rive.dart';
 
 class SignInForm extends StatefulWidget {
@@ -19,13 +20,6 @@ class _SignInForm extends State<SignInForm> {
   late SMITrigger reset;
 
   late SMITrigger confetti;
-
-  StateMachineController getRiveController(Artboard artboard) {
-    StateMachineController? controller =
-        StateMachineController.fromArtboard(artboard, "State Machine 1");
-    artboard.addController(controller!);
-    return controller;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -199,7 +193,7 @@ class _SignInForm extends State<SignInForm> {
                   "assets/RiveAssets/check.riv",
                   onInit: (artboard) {
                     StateMachineController controller =
-                        getRiveController(artboard);
+                        RiveUtils.getRiveController(artboard);
                     check = controller.findSMI("Check") as SMITrigger;
                     error = controller.findSMI("Error") as SMITrigger;
                     reset = controller.findSMI("Reset") as SMITrigger;
@@ -213,7 +207,7 @@ class _SignInForm extends State<SignInForm> {
             child: RiveAnimation.asset(
               "assets/RiveAssets/confetti.riv",
               onInit: (artboard){
-                StateMachineController controller = getRiveController(artboard);
+                StateMachineController controller = RiveUtils.getRiveController(artboard);
                 confetti = controller.findSMI("Trigger explosion") as SMITrigger;
               },
             ),
