@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:petapp/Page/Home.dart';
 import 'package:petapp/Page/login/loginPage.dart';
 import 'package:petapp/Page/petInfo/petInfoPage.dart';
 
@@ -26,7 +27,8 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home:  PetInfoPage(),
+      debugShowCheckedModeBanner: false,
+      home:  HomePage(),
       // home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
