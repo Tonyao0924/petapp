@@ -1,5 +1,8 @@
+
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:petapp/Page/petInsert/upload_image_widget.dart';
 
 class PetInsertpage extends StatefulWidget {
   @override
@@ -7,6 +10,7 @@ class PetInsertpage extends StatefulWidget {
 }
 
 class _PetInsertpage extends State<PetInsertpage> {
+  String _path = "";
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -69,7 +73,34 @@ class _PetInsertpage extends State<PetInsertpage> {
                           EdgeInsets.only(left: 30, top: 30, right: 20, bottom: 0),
                           color: Colors.grey,
                           child: Center(
-                            child: Text('照片'),
+                            child: UploadImageWidget(
+                              onImagePicked: (path) {
+                                setState(() {
+                                  _path = path;
+                                });
+                              },
+                              child: _path == ""
+                                  ? Container(
+                                height: 100,
+                                width: 100,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(13),
+                                  color: const Color(0xFFCCCCCC),
+                                ),
+                                child: Icon(Icons.collections_outlined),
+                              )
+                                  : SizedBox(
+                                height: 100,
+                                width: 100,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(13),
+                                  child: Image.file(
+                                    File(_path),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
                           width: 142,
                           height: 120,
