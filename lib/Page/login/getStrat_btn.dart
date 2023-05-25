@@ -8,7 +8,6 @@ class GetStart extends StatefulWidget {
 }
 class _GetStart extends State<GetStart> {
   final SignInDialog signInDialog = SignInDialog();
-
   void _showSignInDialog(BuildContext context) {
     signInDialog.showSignInDialog(context);
   }
