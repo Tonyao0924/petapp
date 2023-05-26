@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:petapp/Page/login/loginPage.dart';
 import 'package:petapp/Page/petInfo/petInfoPage.dart';
+import 'package:petapp/Page/petInsert/petInsertPage.dart';
+import 'package:petapp/commonComponents/entryPoint.dart';
+import 'package:flutter/services.dart';
 
 import 'Page/Home.dart';
 
 void main() {
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+    systemNavigationBarColor: Colors.white,
+    statusBarIconBrightness: Brightness.dark,
+    systemNavigationBarIconBrightness: Brightness.dark,
+  ));
   runApp(const MyApp());
 }
 
@@ -19,6 +28,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+      // home: const MyHomePage(title: 'Flutter Demo Home Page'),
       debugShowCheckedModeBanner: false,
       home:  HomePage(),
     );
