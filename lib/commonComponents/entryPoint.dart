@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:petapp/Page/Home.dart';
 import 'package:petapp/commonComponents/constants.dart';
 import 'package:petapp/utils/riveUtils.dart';
 import 'package:rive/rive.dart';
@@ -18,6 +19,7 @@ class _EntryPointState extends State<EntryPoint> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
+      body: HomePage(),
       bottomNavigationBar: SafeArea(
         child: Container(
           padding: EdgeInsets.all(12),
