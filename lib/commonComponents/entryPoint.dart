@@ -25,7 +25,7 @@ class _EntryPointState extends State<EntryPoint> {
           padding: EdgeInsets.all(12),
           margin: EdgeInsets.symmetric(horizontal: 24),
           decoration: BoxDecoration(
-            color: backgroundColor2.withOpacity(0.8),
+            color: backgroundColor2,
             borderRadius: BorderRadius.all(
               Radius.circular(24),
             ),
