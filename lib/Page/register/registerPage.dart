@@ -1,14 +1,13 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'signInForm.dart';
-import 'package:petapp/Page/register/registerPage.dart';
+import 'package:petapp/Page/login/loginPage.dart';
+import 'package:petapp/Page/register/registerForm.dart';
+import 'package:petapp/Page/login/signInDialog.dart';
 
-class SignInDialog {
-  void _showRegisterDialog(BuildContext context){
-    RegisterDialog registerDialog = RegisterDialog();
-    registerDialog.showSignInDialog(context);
+class RegisterDialog {
+  void _showSignInDialog(BuildContext context){
+    SignInDialog signInDialog = SignInDialog();
+    signInDialog.showSignInDialog(context);
   }
   void showSignInDialog(BuildContext context) {
     showGeneralDialog(
@@ -63,7 +62,7 @@ class SignInDialog {
                         ),
                       ),
                       SizedBox(height: 20,),
-                      SignInForm(),
+                      RegisterForm(),
                       SizedBox(height: 40,),
                       Row(
                         children: const [
@@ -102,18 +101,17 @@ class SignInDialog {
                           mainAxisAlignment: MainAxisAlignment.center,
                           mainAxisSize: MainAxisSize.max,
                           children:  <Widget> [
-                            const Text('還沒有帳戶? '),
                             TextButton(
                               style: TextButton.styleFrom(
                                   padding: EdgeInsets.zero,
                                   alignment: Alignment.center),
                               onPressed: (){
                                 Navigator.pop(context);
-                                _showRegisterDialog(context);
+                                _showSignInDialog(context);
                                 // Navigator.pushNamed(context, '/register');
                               },
                               child: const Text(
-                                '註冊',
+                                '已有帳戶?',
                                 style: TextStyle(color: Colors.grey, fontSize: 15),
                               ),
                             ),
