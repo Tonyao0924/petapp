@@ -4,6 +4,7 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:petapp/Page/petInfo/petInfoPage.dart';
 
 import 'package:petapp/Page/petInsert/petInsertPage.dart';
+import 'package:petapp/Page/petoverview/petOverview.dart';
 
 import 'login/loginPage.dart';
 class HomePage extends StatefulWidget {
@@ -80,7 +81,7 @@ class _HomePage extends State<HomePage> {
                         child: ElevatedButton(
                           onPressed: () {
                             Navigator.push(
-                                context, MaterialPageRoute(builder: (context) => PetInfoPage()));
+                                context, MaterialPageRoute(builder: (context) => PetOverview()));
                           },
                           style: ElevatedButton.styleFrom(
                             padding: EdgeInsets.zero, // 去除內部填充
@@ -97,7 +98,7 @@ class _HomePage extends State<HomePage> {
                               onTap: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => PetInfoPage()),
+                                  MaterialPageRoute(builder: (context) => PetOverview()),
                                 );
                                 // 按鈕點擊事件處理
                               },
