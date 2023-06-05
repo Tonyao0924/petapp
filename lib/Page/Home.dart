@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:petapp/Page/petInfo/petInfoPage.dart';
 
 import 'package:petapp/Page/petInsert/petInsertPage.dart';
 import 'package:petapp/Page/petoverview/petOverview.dart';
