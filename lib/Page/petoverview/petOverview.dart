@@ -7,7 +7,6 @@ class PetOverview extends StatefulWidget {
 }
 
 class _PetOverview extends State<PetOverview> {
-  final TextEditingController findController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -48,19 +47,6 @@ class _PetOverview extends State<PetOverview> {
                 itemBuilder: (BuildContext context, int index) {
                   return Column(
                     children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 40),
-                        child: Center(
-                          child: TextField(
-                            controller: findController,
-                            decoration: const InputDecoration(
-                              prefixIcon: Icon(Icons.search),
-                              border: OutlineInputBorder(),
-                              hintText: 'Search Name',
-                            ),
-                          ),
-                        ),
-                      ),
                       ...List.generate(
                         OverViewNavs.length,
                             (index) => Center(
