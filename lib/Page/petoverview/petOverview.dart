@@ -10,6 +10,7 @@ class _PetOverview extends State<PetOverview> {
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
@@ -64,21 +65,20 @@ class _PetOverview extends State<PetOverview> {
                                 elevation: 0,
                                 backgroundColor: Colors.transparent, // 設置背景為透明
                               ),
-                              child: Ink.image(
-                                image: AssetImage(
-                                    OverViewNavs[index].src), // 按鈕背景圖片
-                                fit: BoxFit.cover, // 圖片填充方式
-                                child: InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      OverViewNavs[index].route
-                                    );
-                                    // 按鈕點擊事件處理
-                                  },
-                                  child: Container(
-                                    width: 310, // 按鈕寬度
-                                    height: 180, // 按鈕高度
+                              child: AspectRatio(
+                                aspectRatio: 31 / 18,
+                                child: Ink.image(
+                                  image: AssetImage(
+                                      OverViewNavs[index].src), // 按鈕背景圖片
+                                  fit: BoxFit.cover, // 圖片填充方式
+                                  child: InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        OverViewNavs[index].route
+                                      );
+                                      // 按鈕點擊事件處理
+                                    },
                                   ),
                                 ),
                               ),
