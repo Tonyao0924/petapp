@@ -7,7 +7,6 @@ class PetOverview extends StatefulWidget {
 }
 
 class _PetOverview extends State<PetOverview> {
-
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
