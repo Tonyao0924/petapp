@@ -1,4 +1,4 @@
-# petapp
+# Pet Monitoring System Application
 
 ###### required environment
 Flutter 3.7.1
@@ -19,3 +19,17 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+## Getting Started
+
+### Run
+
+```shell
+flutter run --no-sound-null-safety
+```
+
+### Build APK
+
+```shell
+flutter build apk --no-sound-null-safety
+```

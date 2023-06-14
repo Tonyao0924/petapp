@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:petapp/Page/Home.dart';
 import 'package:petapp/commonComponents/constants.dart';
 import 'package:petapp/utils/riveUtils.dart';
@@ -25,7 +24,7 @@ class _EntryPointState extends State<EntryPoint> {
           padding: EdgeInsets.all(12),
           margin: EdgeInsets.symmetric(horizontal: 24),
           decoration: BoxDecoration(
-            color: backgroundColor2,
+            color: ThemeConfig.backgroundColor2,
             borderRadius: BorderRadius.all(
               Radius.circular(24),
             ),

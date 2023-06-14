@@ -1,12 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:petapp/Page/petInfo/petInfoPage.dart';
-
 import 'package:petapp/Page/petInsert/petInsertPage.dart';
 import 'package:petapp/Page/petoverview/petOverview.dart';
 
-import 'login/loginPage.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -63,7 +60,7 @@ class _HomePage extends State<HomePage> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => PetInsertpage()),
+                                        builder: (context) => PetInsertPage()),
                                   );
                                   // 按鈕點擊事件處理
                                 },
