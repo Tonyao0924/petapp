@@ -35,69 +35,31 @@ class _HomePage extends State<HomePage> {
                     ),
                     width: 341,
                   ),
-                  Row(
-                    children: <Widget>[
-                      Center(
-                        child: Container(
-                          margin: EdgeInsets.only(
-                              left: 40, top: 30, right: 0, bottom: 0),
-                          child: ElevatedButton(
-                            onPressed: () {},
-                            style: ElevatedButton.styleFrom(
-                              padding: EdgeInsets.zero, // 去除內部填充
-                              shape: RoundedRectangleBorder(
-                                borderRadius:
-                                BorderRadius.circular(30.0), // 設置圓角
-                              ),
-                              backgroundColor: Colors.transparent, // 設置背景為透明
-                            ),
-                            child: Ink.image(
-                              image: AssetImage(
-                                  'assets/images/addpet.png'), // 按鈕背景圖片
-                              fit: BoxFit.cover, // 圖片填充方式
-                              child: InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => PetInsertPage()),
-                                  );
-                                  // 按鈕點擊事件處理
-                                },
-                                child: Container(
-                                  width: 156, // 按鈕寬度
-                                  height: 156, // 按鈕高度
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Center(
-                          child: Container(
-                            margin: EdgeInsets.only(
-                                left: 20, top: 30, right: 0, bottom: 0),
-                            child: ElevatedButton(
-                              onPressed: () {
-                                Navigator.push(
-                                    context, MaterialPageRoute(builder: (context) => PetOverview()));
-                              },
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        ElevatedButton(
+                              onPressed: () {},
                               style: ElevatedButton.styleFrom(
                                 padding: EdgeInsets.zero, // 去除內部填充
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30.0), // 設置圓角
+                                  borderRadius:
+                                  BorderRadius.circular(30.0), // 設置圓角
                                 ),
                                 backgroundColor: Colors.transparent, // 設置背景為透明
                               ),
                               child: Ink.image(
                                 image: AssetImage(
-                                    'assets/images/petoverview.png'), // 按鈕背景圖片
+                                    'assets/images/addpet.png'), // 按鈕背景圖片
                                 fit: BoxFit.cover, // 圖片填充方式
                                 child: InkWell(
                                   onTap: () {
                                     Navigator.push(
                                       context,
-                                      MaterialPageRoute(builder: (context) => PetOverview()),
+                                      MaterialPageRoute(
+                                          builder: (context) => PetInsertpage()),
                                     );
                                     // 按鈕點擊事件處理
                                   },
@@ -108,9 +70,40 @@ class _HomePage extends State<HomePage> {
                                 ),
                               ),
                             ),
-                          )
-                      ),
-                    ],
+                        SizedBox(width: 25,),
+                        ElevatedButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                      context, MaterialPageRoute(builder: (context) => PetOverview()));
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  padding: EdgeInsets.zero, // 去除內部填充
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30.0), // 設置圓角
+                                  ),
+                                  backgroundColor: Colors.transparent, // 設置背景為透明
+                                ),
+                                child: Ink.image(
+                                  image: AssetImage(
+                                      'assets/images/petoverview.png'), // 按鈕背景圖片
+                                  fit: BoxFit.cover, // 圖片填充方式
+                                  child: InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => PetOverview()),
+                                      );
+                                      // 按鈕點擊事件處理
+                                    },
+                                    child: Container(
+                                      width: 156, // 按鈕寬度
+                                      height: 156, // 按鈕高度
+                                    ),
+                                  ),
+                                ),
+                              ),
+                      ],
+                    ),
                   ),
                   Center(
                     child: Container(

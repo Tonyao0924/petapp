@@ -95,7 +95,7 @@ packages:
     source: hosted
     version: "2.0.1"
   flutter_page_indicator:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: flutter_page_indicator
       sha256: a5b2992228c2827b69faed3977681a3f5c313c7f13d72272decbb2923d1d7176
@@ -366,7 +366,7 @@ packages:
     source: hosted
     version: "0.4.16"
   transformer_page_view:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: transformer_page_view
       sha256: "2210531bc4148831061c575070173f32693415be8bbbf5bd2159a38f2adff61c"
