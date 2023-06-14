@@ -4,12 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:petapp/Page/petInsert/upload_image_widget.dart';
 
-class PetInsertpage extends StatefulWidget {
+class PetInsertPage extends StatefulWidget {
   @override
-  _PetInsertpage createState() => _PetInsertpage();
+  _PetInsertPage createState() => _PetInsertPage();
 }
 
-class _PetInsertpage extends State<PetInsertpage> {
+class _PetInsertPage extends State<PetInsertPage> {
   String _path = "";
   @override
   Widget build(BuildContext context) {
