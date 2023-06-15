@@ -59,7 +59,7 @@ class _HomePage extends State<HomePage> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => PetInsertpage()),
+                                          builder: (context) => PetInsertPage()),
                                     );
                                     // 按鈕點擊事件處理
                                   },
