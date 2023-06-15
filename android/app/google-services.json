@@ -1,0 +1,76 @@
+{
+  "project_info": {
+    "project_number": "218937674834",
+    "project_id": "petmonitoringsystem-729da",
+    "storage_bucket": "petmonitoringsystem-729da.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:218937674834:android:bc76855286272274db638b",
+        "android_client_info": {
+          "package_name": "com.example.petapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "218937674834-d7spr709mtjt1bt99u2k57b115rndus8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-IrhHSqB0m6wiGAENuZkQgI08Zr54m0I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "218937674834-d7spr709mtjt1bt99u2k57b115rndus8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:218937674834:android:a9bc9d028e26cd05db638b",
+        "android_client_info": {
+          "package_name": "pet.monitoring.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "218937674834-4ehm7bgousop6d77ukk4levcscqe8lsm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "pet.monitoring.android",
+            "certificate_hash": "1628c9a97f246370164af381929db2ea4c814cdd"
+          }
+        },
+        {
+          "client_id": "218937674834-d7spr709mtjt1bt99u2k57b115rndus8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-IrhHSqB0m6wiGAENuZkQgI08Zr54m0I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "218937674834-d7spr709mtjt1bt99u2k57b115rndus8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
