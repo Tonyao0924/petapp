@@ -2,7 +2,9 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:petapp/Page/petInsert/pet_insert_api.dart';
 import 'package:petapp/Page/petInsert/upload_image_widget.dart';
+
 
 class PetInsertPage extends StatefulWidget {
   @override
@@ -11,6 +13,17 @@ class PetInsertPage extends StatefulWidget {
 
 class _PetInsertPage extends State<PetInsertPage> {
   String _path = "";
+  String name = "";
+  int keeper = 0;
+  int type = 0;
+  String birthday = "";
+  String content = "";
+  PetRepository repository = PetRepository();
+  final TextEditingController Namecontroller = TextEditingController();
+  final TextEditingController Keepercontroller = TextEditingController();
+  final TextEditingController Typecontroller = TextEditingController();
+  final TextEditingController Birthdaycontroller = TextEditingController();
+  final TextEditingController Contentcontroller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -115,8 +128,9 @@ class _PetInsertPage extends State<PetInsertPage> {
                               Container(
                                   margin: const EdgeInsets.only(
                                       left: 0, top: 0, right: 0, bottom: 0),
-                                  child: const TextField(
+                                  child: TextField(
                                       keyboardType: TextInputType.text,
+                                      controller: Namecontroller,
                                       decoration: InputDecoration(
                                         isCollapsed: true,
                                         contentPadding: EdgeInsets.symmetric(
@@ -138,8 +152,9 @@ class _PetInsertPage extends State<PetInsertPage> {
                               Container(
                                   margin: const EdgeInsets.only(
                                       left: 0, top: 14, right: 0, bottom: 0),
-                                  child: const TextField(
+                                  child: TextField(
                                       keyboardType: TextInputType.text,
+                                      controller: Birthdaycontroller,
                                       decoration: InputDecoration(
                                         isCollapsed: true,
                                         contentPadding: EdgeInsets.symmetric(
@@ -168,8 +183,9 @@ class _PetInsertPage extends State<PetInsertPage> {
                         alignment: Alignment.bottomLeft,
                         margin:
                         const EdgeInsets.only(left: 0, top: 20, right: 0, bottom: 0),
-                        child: const TextField(
+                        child: TextField(
                             keyboardType: TextInputType.text,
+                            controller: Typecontroller,
                             decoration: InputDecoration(
                               isCollapsed: true,
                               contentPadding:
@@ -193,7 +209,7 @@ class _PetInsertPage extends State<PetInsertPage> {
                         alignment: Alignment.bottomLeft,
                         margin:
                         const EdgeInsets.only(left: 0, top: 20, right: 0, bottom: 0),
-                        child: const TextField(
+                        child: TextField(
                             keyboardType: TextInputType.text,
                             decoration: InputDecoration(
                               isCollapsed: true,
@@ -268,7 +284,8 @@ class _PetInsertPage extends State<PetInsertPage> {
                         alignment: Alignment.bottomLeft,
                         margin:
                         const EdgeInsets.only(left: 0, top: 20, right: 0, bottom: 0),
-                        child: const TextField(
+                        child: TextField(
+                            controller: Contentcontroller,
                             keyboardType: TextInputType.text,
                             decoration: InputDecoration(
                               isCollapsed: true,
@@ -293,8 +310,9 @@ class _PetInsertPage extends State<PetInsertPage> {
                         alignment: Alignment.bottomLeft,
                         margin:
                         const EdgeInsets.only(left: 0, top: 20, right: 0, bottom: 0),
-                        child: const TextField(
+                        child: TextField(
                             keyboardType: TextInputType.text,
+                            controller: Keepercontroller,
                             decoration: InputDecoration(
                               isCollapsed: true,
                               contentPadding:
@@ -349,7 +367,15 @@ class _PetInsertPage extends State<PetInsertPage> {
                                             RoundedRectangleBorder(
                                                 borderRadius:
                                                 BorderRadius.circular(18.76)))),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      name = Namecontroller.text;
+                                      keeper = int.parse(Keepercontroller.text);
+                                      type =  int.parse(Typecontroller.text);
+                                      birthday = Birthdaycontroller.text;
+                                      content = Contentcontroller.text;
+                                      print(repository.createPet(Pet(name: name,keeper: keeper,type: type,birthday: birthday,content: content)));
+
+                                    },
                                     child: Text(
                                       '新增寵物',
                                       style: TextStyle(color: Colors.white),
