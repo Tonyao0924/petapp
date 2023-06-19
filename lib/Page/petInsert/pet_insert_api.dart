@@ -45,21 +45,22 @@ abstract class ApiPetData {
 }
 class PetRepository implements ApiPetData {
   final client = http.Client();
-  final String domain = "http://140.125.207.230:8000/swagger/pet/";
+  final String domain = "http://140.125.207.230:8000/";
 
 
   @override
   Future<String> createPet(Pet body) {
-    return _createUser(
-      Uri.parse('$domain/pet/'),
+    return _createPet(
+      Uri.parse('$domain/pet/api'),
       body,
     );
   }
-  Future<String> _createUser(
+  Future<String> _createPet(
       Uri url,
       Pet body,
       ) async {
     try {
+      print(body.toJson());
       final response = await client.post(
         url,
         headers: {
@@ -68,8 +69,11 @@ class PetRepository implements ApiPetData {
         body: body.toJson(),
       );
       if (response.statusCode == 200) {
+
         return response.body;
+
       } else {
+
         return response.body;
       }
     } catch (e) {
@@ -79,8 +83,30 @@ class PetRepository implements ApiPetData {
 
   @override
   Future<String> getPet(int id) {
-    // TODO: implement getPet
-    throw UnimplementedError();
+    return _getPet(
+      Uri.parse('$domain/pet/list/'),
+    );
+  }
+  Future<String> _getPet(
+      Uri url,
+      ) async {
+    try {
+      final response = await client.get(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      );
+      if (response.statusCode == 200) {
+        return response.body;
+      } else {
+        print(response.statusCode);
+
+        return response.body;
+      }
+    } catch (e) {
+      return e.toString();
+    }
   }
 
   @override

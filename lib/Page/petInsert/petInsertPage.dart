@@ -373,7 +373,9 @@ class _PetInsertPage extends State<PetInsertPage> {
                                       type =  int.parse(Typecontroller.text);
                                       birthday = Birthdaycontroller.text;
                                       content = Contentcontroller.text;
-                                      print(repository.createPet(Pet(name: name,keeper: keeper,type: type,birthday: birthday,content: content)));
+                                      print("Api");
+                                      // repository.createPet(Pet(name: name,keeper: keeper,type: type,birthday: birthday,content: content));
+                                      repository.getPet(1);
 
                                     },
                                     child: Text(
