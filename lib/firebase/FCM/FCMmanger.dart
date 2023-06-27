@@ -5,7 +5,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import 'package:petapp/manager/service/navigationService.dart';
+import 'package:petapp/service/navigationService.dart';
 
 /*
   onBackgroundMessageHandler will be perform when app is closed
