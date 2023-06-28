@@ -1,7 +1,11 @@
 import 'dart:io';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../../firebase/auth/googleAuth.dart';
+import 'facebookSignInButton.dart';
+import 'googleSignInButton.dart';
 import 'signInForm.dart';
 import 'package:petapp/Page/register/registerPage.dart';
 
@@ -98,6 +102,46 @@ class SignInDialog {
                         ],
                       ),
                       SizedBox(height: 20,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children:  [
+                          FutureBuilder(
+                            future:
+                            GAuthentication.initializeFirebase(context: context),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasError) {
+                                return const Text('Error initializing Firebase');
+                              } else if (snapshot.connectionState ==
+                                  ConnectionState.done) {
+                                return const GoogleSignInButton();
+                              }
+                              return const CircularProgressIndicator(
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                    Color(0xFFF57C00)
+                                ),
+                              );
+                            },
+                          ),
+                          FutureBuilder(
+                            future:
+                            GAuthentication.initializeFirebase(context: context),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasError) {
+                                return const Text('Error initializing Firebase');
+                              } else if (snapshot.connectionState ==
+                                  ConnectionState.done) {
+                                return const FacebookSignInButton();
+                              }
+                              return const CircularProgressIndicator(
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                    Color(0xFFF57C00)
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+
+                      ),
                       Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           mainAxisSize: MainAxisSize.max,
