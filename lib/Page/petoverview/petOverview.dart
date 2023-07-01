@@ -1,5 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:petapp/Page/petlist/petList_cat.dart';
+import 'package:petapp/Page/petlist/petList_dog.dart';
+import 'package:petapp/Page/petlist/petList_mouse.dart';
+import 'package:petapp/Page/petlist/petList_others.dart';
 
 class PetOverview extends StatefulWidget {
   @override
@@ -100,11 +104,11 @@ class OverViewAsset {
 
 List<OverViewAsset> OverViewNavs = [
   OverViewAsset("assets/images/dog_type.png",
-      route: MaterialPageRoute(builder: (context) => PetOverview())),
+      route: MaterialPageRoute(builder: (context) => PetList_dog())),
   OverViewAsset("assets/images/cat_type.png",
-      route: MaterialPageRoute(builder: (context) => PetOverview())),
+      route: MaterialPageRoute(builder: (context) => PetList_cat())),
   OverViewAsset("assets/images/mouse_type.png",
-      route: MaterialPageRoute(builder: (context) => PetOverview())),
+      route: MaterialPageRoute(builder: (context) => PetList_mouse())),
   OverViewAsset("assets/images/other_type.png",
-      route: MaterialPageRoute(builder: (context) => PetOverview())),
+      route: MaterialPageRoute(builder: (context) => PetList_others())),
 ];
