@@ -1,5 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:petapp/Page/Home.dart';
+import 'package:petapp/model/Pet.dart';
+
+import '../petInsert/pet_api.dart';
 
 class PetOverview extends StatefulWidget {
   @override
@@ -7,6 +11,7 @@ class PetOverview extends StatefulWidget {
 }
 
 class _PetOverview extends State<PetOverview> {
+  PetRepository repository = PetRepository();
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -54,7 +59,8 @@ class _PetOverview extends State<PetOverview> {
                             margin: EdgeInsets.only(
                                 left: 25, top: 30, right: 25, bottom: 0),
                             child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                              },
                               style: ElevatedButton.styleFrom(
                                 padding: EdgeInsets.zero, // 去除內部填充
                                 shape: RoundedRectangleBorder(
@@ -72,6 +78,7 @@ class _PetOverview extends State<PetOverview> {
                                   fit: BoxFit.cover, // 圖片填充方式
                                   child: InkWell(
                                     onTap: () {
+                                      repository.getPetList(OverViewNavs[index].type);
                                       Navigator.push(
                                         context,
                                         OverViewNavs[index].route
@@ -93,18 +100,18 @@ class _PetOverview extends State<PetOverview> {
 class OverViewAsset {
   final String src;
   final Route route;
-
-  OverViewAsset(this.src,
+  final String type;
+  OverViewAsset(this.src,this.type,
       {required this.route});
 }
 
 List<OverViewAsset> OverViewNavs = [
-  OverViewAsset("assets/images/dog_type.png",
-      route: MaterialPageRoute(builder: (context) => PetOverview())),
-  OverViewAsset("assets/images/cat_type.png",
-      route: MaterialPageRoute(builder: (context) => PetOverview())),
-  OverViewAsset("assets/images/mouse_type.png",
-      route: MaterialPageRoute(builder: (context) => PetOverview())),
-  OverViewAsset("assets/images/other_type.png",
-      route: MaterialPageRoute(builder: (context) => PetOverview())),
+  OverViewAsset("assets/images/dog_type.png","dog",
+      route: MaterialPageRoute(builder: (context) => HomePage())),
+  OverViewAsset("assets/images/cat_type.png","cat",
+      route: MaterialPageRoute(builder: (context) => HomePage())),
+  OverViewAsset("assets/images/mouse_type.png","mouse",
+      route: MaterialPageRoute(builder: (context) => HomePage())),
+  OverViewAsset("assets/images/other_type.png","other",
+      route: MaterialPageRoute(builder: (context) => HomePage())),
 ];

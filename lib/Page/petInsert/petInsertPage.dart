@@ -1,11 +1,10 @@
-
+import 'package:intl/intl.dart';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:petapp/Page/petInsert/pet_insert_api.dart';
+import 'package:petapp/Page/petInsert/pet_api.dart';
 import 'package:petapp/Page/petInsert/upload_image_widget.dart';
-
-
+import '../../model/Pet.dart';
 class PetInsertPage extends StatefulWidget {
   @override
   _PetInsertPage createState() => _PetInsertPage();
@@ -22,8 +21,15 @@ class _PetInsertPage extends State<PetInsertPage> {
   final TextEditingController Namecontroller = TextEditingController();
   final TextEditingController Keepercontroller = TextEditingController();
   final TextEditingController Typecontroller = TextEditingController();
-  final TextEditingController Birthdaycontroller = TextEditingController();
   final TextEditingController Contentcontroller = TextEditingController();
+  final dateFormatter = DateFormat('yyyy-MM-dd');
+  late DateTime selectedDateTime;
+  @override
+  void initState() {
+    super.initState();
+    var now = DateTime.now();
+    selectedDateTime = now;
+  }
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -150,29 +156,38 @@ class _PetInsertPage extends State<PetInsertPage> {
                                         ),
                                       ))),
                               Container(
-                                  margin: const EdgeInsets.only(
-                                      left: 0, top: 14, right: 0, bottom: 0),
-                                  child: TextField(
-                                      keyboardType: TextInputType.text,
-                                      controller: Birthdaycontroller,
-                                      decoration: InputDecoration(
-                                        isCollapsed: true,
-                                        contentPadding: EdgeInsets.symmetric(
-                                            horizontal: 8, vertical: 15),
-                                        hintText: '出生年月日',
-                                        hintStyle: TextStyle(
-                                          color: Color(0xFFfd9340),
-                                        ),
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(13),
-                                          ),
-                                          borderSide: BorderSide(
-                                            color: Color(0xFFDADADA),
-                                            width: 1,
+                                alignment:Alignment.centerLeft,
+                                width: 200,
+                                margin: const EdgeInsets.only(
+                                        left: 0, top: 14, right: 0, bottom: 0),
+                              decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(15),
+                                          border: Border.all(
+                                          color: Color(0xFFDADADA),
+                                          width: 1.0,
+                                          style: BorderStyle.solid
                                           ),
                                         ),
-                                      ))),
+                                child: TextButton(
+                                  child: Text(
+                                    dateFormatter.format(selectedDateTime),
+                                    style: TextStyle(color: Colors.black),
+                                    textAlign: TextAlign.left,
+                                  ),
+                                  onPressed: () async{
+                                    final result = await showDatePicker(
+                                        context: context,
+                                        initialDate: DateTime.now(),
+                                        firstDate: DateTime(2020, 01),
+                                        lastDate: DateTime(2100, 12));
+                                    if (result != null) {
+                                      setState(() {
+                                        selectedDateTime = result;
+                                      });
+                                    }
+                                  },
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -371,12 +386,10 @@ class _PetInsertPage extends State<PetInsertPage> {
                                       name = Namecontroller.text;
                                       keeper = int.parse(Keepercontroller.text);
                                       type =  int.parse(Typecontroller.text);
-                                      birthday = Birthdaycontroller.text;
+                                      birthday = dateFormatter.format(selectedDateTime);
                                       content = Contentcontroller.text;
-                                      print("Api");
-                                      // repository.createPet(Pet(name: name,keeper: keeper,type: type,birthday: birthday,content: content));
-                                      repository.getPet(1);
-
+                                      print(birthday);
+                                      repository.createPet(Pet(name: name,keeper: keeper,type: type,birthday: birthday,content: content));
                                     },
                                     child: Text(
                                       '新增寵物',
