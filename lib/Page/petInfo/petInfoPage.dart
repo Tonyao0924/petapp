@@ -7,8 +7,10 @@ class PetInfoPage extends StatefulWidget {
 }
 
 class _PetInfoPage extends State<PetInfoPage> {
+  bool read = true;
   @override
   Widget build(BuildContext context) {
+    final Petinfo = ModalRoute.of(context)!.settings.arguments as Map<String,dynamic>;
     // TODO: implement build
     return Scaffold(
         appBar: AppBar(
@@ -78,7 +80,7 @@ class _PetInfoPage extends State<PetInfoPage> {
                             alignment: Alignment.bottomLeft,
                             margin: const EdgeInsets.only(
                                 left: 25, top: 20, right: 0, bottom: 0),
-                            child: const TextField(
+                            child: TextFormField(
                                 keyboardType: TextInputType.text,
                                 readOnly: true,
                                 decoration: InputDecoration(
@@ -104,19 +106,21 @@ class _PetInfoPage extends State<PetInfoPage> {
                             alignment: Alignment.bottomLeft,
                             margin: const EdgeInsets.only(
                                 left: 0, top: 20, right: 0, bottom: 0),
-                            child: const TextField(
+                            child: TextFormField(
+                                initialValue: Petinfo['name'],
+                                readOnly: read,
                                 keyboardType: TextInputType.text,
-                                readOnly: true,
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
                                   isCollapsed: true,
                                   contentPadding: EdgeInsets.symmetric(
                                       horizontal: 8, vertical: 15),
-                                  hintText: '西八',
                                   hintStyle: TextStyle(
                                     color: Colors.grey,
                                   ),
-                                ))),
+                                )
+                            )
+                        ),
                       ],
                     ),
                     Row(
@@ -152,19 +156,20 @@ class _PetInfoPage extends State<PetInfoPage> {
                             alignment: Alignment.bottomLeft,
                             margin: const EdgeInsets.only(
                                 left: 0, top: 10, right: 0, bottom: 0),
-                            child: const TextField(
+                            child: TextFormField(
+                                initialValue: Petinfo['type']['typename'],
+                                readOnly: read,
                                 keyboardType: TextInputType.text,
-                                readOnly: true,
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
                                   isCollapsed: true,
                                   contentPadding: EdgeInsets.symmetric(
                                       horizontal: 8, vertical: 15),
-                                  hintText: '巴哥犬',
                                   hintStyle: TextStyle(
                                     color: Colors.grey,
                                   ),
-                                ))),
+                                )
+                            )),
                       ],
                     ),
                     Row(
@@ -200,19 +205,20 @@ class _PetInfoPage extends State<PetInfoPage> {
                             alignment: Alignment.bottomLeft,
                             margin: const EdgeInsets.only(
                                 left: 0, top: 10, right: 0, bottom: 0),
-                            child: const TextField(
+                            child: TextFormField(
+                                initialValue: Petinfo['birthday'],
+                                readOnly: read,
                                 keyboardType: TextInputType.text,
-                                readOnly: true,
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
                                   isCollapsed: true,
                                   contentPadding: EdgeInsets.symmetric(
                                       horizontal: 8, vertical: 15),
-                                  hintText: '2023/03/06',
                                   hintStyle: TextStyle(
                                     color: Colors.grey,
                                   ),
-                                ))),
+                                )
+                            )),
                       ],
                     ),
                     Row(
@@ -248,19 +254,20 @@ class _PetInfoPage extends State<PetInfoPage> {
                             alignment: Alignment.bottomLeft,
                             margin: const EdgeInsets.only(
                                 left: 0, top: 10, right: 0, bottom: 0),
-                            child: const TextField(
+                            child: TextFormField(
+                                initialValue: Petinfo['birthday'], //後端需要新增一個性別的key
+                                readOnly: read,
                                 keyboardType: TextInputType.text,
-                                readOnly: true,
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
                                   isCollapsed: true,
                                   contentPadding: EdgeInsets.symmetric(
                                       horizontal: 8, vertical: 15),
-                                  hintText: '女',
                                   hintStyle: TextStyle(
                                     color: Colors.grey,
                                   ),
-                                ))),
+                                )
+                            )),
                       ],
                     ),
                     Row(
@@ -296,19 +303,20 @@ class _PetInfoPage extends State<PetInfoPage> {
                             alignment: Alignment.bottomLeft,
                             margin: const EdgeInsets.only(
                                 left: 0, top: 10, right: 0, bottom: 0),
-                            child: const TextField(
+                            child: TextFormField(
+                                initialValue: Petinfo['birthday'], // 後端需要新增一個體重的key
+                                readOnly: read,
                                 keyboardType: TextInputType.text,
-                                readOnly: true,
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
                                   isCollapsed: true,
                                   contentPadding: EdgeInsets.symmetric(
                                       horizontal: 8, vertical: 15),
-                                  hintText: '5kg',
                                   hintStyle: TextStyle(
                                     color: Colors.grey,
                                   ),
-                                ))),
+                                )
+                            )),
                       ],
                     ),
                     Row(
@@ -344,19 +352,20 @@ class _PetInfoPage extends State<PetInfoPage> {
                             alignment: Alignment.bottomLeft,
                             margin: const EdgeInsets.only(
                                 left: 0, top: 10, right: 0, bottom: 0),
-                            child: const TextField(
+                            child: TextFormField(
+                                initialValue: Petinfo['birthday'], // 後端需要新增一個絕育的key
+                                readOnly: read,
                                 keyboardType: TextInputType.text,
-                                readOnly: true,
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
                                   isCollapsed: true,
                                   contentPadding: EdgeInsets.symmetric(
                                       horizontal: 8, vertical: 15),
-                                  hintText: '是',
                                   hintStyle: TextStyle(
                                     color: Colors.grey,
                                   ),
-                                ))),
+                                )
+                            )),
                       ],
                     ),
                     Column(
@@ -377,7 +386,9 @@ class _PetInfoPage extends State<PetInfoPage> {
                             alignment: Alignment.bottomLeft,
                             margin: const EdgeInsets.only(
                                 left: 0, top: 15, right: 0, bottom: 0),
-                            child: const TextField(
+                            child: TextFormField(
+                              initialValue: Petinfo['birthday'],
+                              readOnly: read,
                                 keyboardType: TextInputType.multiline,
                                 maxLines: 8,
                                 decoration: InputDecoration(
@@ -393,11 +404,6 @@ class _PetInfoPage extends State<PetInfoPage> {
                                   isCollapsed: true,
                                   contentPadding: EdgeInsets.symmetric(
                                       horizontal: 8, vertical: 10),
-                                  hintText:
-                                  'Gorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan.',
-                                  hintStyle: TextStyle(
-                                    color: Colors.black,
-                                  ),
                                 ))),
                       ],
                     ),
@@ -434,7 +440,13 @@ class _PetInfoPage extends State<PetInfoPage> {
                                                 borderRadius:
                                                 BorderRadius.circular(
                                                     18.76)))),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      if(read == true){
+                                        read = false;
+                                      }else{
+                                        read = true;
+                                      }
+                                    },
                                     child: Text(
                                       '編輯資訊',
                                       style: TextStyle(
