@@ -1,5 +1,8 @@
+
+
 import 'package:intl/intl.dart';
 import 'dart:io';
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:petapp/Page/petInsert/pet_api.dart';
@@ -382,14 +385,17 @@ class _PetInsertPage extends State<PetInsertPage> {
                                             RoundedRectangleBorder(
                                                 borderRadius:
                                                 BorderRadius.circular(18.76)))),
-                                    onPressed: () {
-                                      name = Namecontroller.text;
-                                      keeper = int.parse(Keepercontroller.text);
-                                      type =  int.parse(Typecontroller.text);
-                                      birthday = dateFormatter.format(selectedDateTime);
-                                      content = Contentcontroller.text;
-                                      print(birthday);
-                                      repository.createPet(Pet(name: name,keeper: keeper,type: type,birthday: birthday,content: content));
+                                    onPressed: () async {
+                                      var PetCreateformdata = FormData.fromMap({
+                                        'name': Namecontroller.text,
+                                        'keeper': int.parse(Keepercontroller.text),
+                                        'type':Typecontroller.text,
+                                        'birthday':dateFormatter.format(selectedDateTime),
+                                        'content': Contentcontroller.text,
+                                        'image': await MultipartFile.fromFile(_path, filename: Namecontroller.text+'.jpg'),
+                                      });
+                                      print(_path);
+                                      repository.createPet(PetCreateformdata);
                                     },
                                     child: Text(
                                       '新增寵物',

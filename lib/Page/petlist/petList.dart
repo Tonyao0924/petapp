@@ -78,11 +78,15 @@ class _PetList extends State<PetList>{
                     PetList.length,
                 (index) => ListTile(
                             leading: CircleAvatar(
-                              backgroundImage: AssetImage('assets/images/peta.png'), // 圖片的部分修改的話應該這樣寫PetList[index]['img'] (目前後端沒有這個key)
+                              backgroundImage: PetList[index]['image'] != null
+                                  ? NetworkImage("http://140.125.207.230:8000"+PetList[index]['image'])
+                                  : null,
                             ),
                             title: Text(PetList[index]['name']),
                             subtitle:Text(PetList[index]['type']['typename']),// 應該要新增一個寵物的品種，類似柴犬、八哥犬等 (目前後端沒有這個key)
                             onTap: () {
+                              print("PetList[index]['id']");
+                              print(PetList[index]['id']);
                               repository.getPetinfo(PetList[index]['id']).then((value) =>
                                   Navigator.push(
                                     context,MaterialPageRoute(

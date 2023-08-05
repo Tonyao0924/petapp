@@ -1,13 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../petInsert/pet_api.dart';
+
 class PetInfoPage extends StatefulWidget {
   @override
   _PetInfoPage createState() => _PetInfoPage();
 }
 
 class _PetInfoPage extends State<PetInfoPage> {
+  PetRepository repository = PetRepository();
   bool read = true;
+
   @override
   Widget build(BuildContext context) {
     final Petinfo = ModalRoute.of(context)!.settings.arguments as Map<String,dynamic>;
@@ -66,7 +70,7 @@ class _PetInfoPage extends State<PetInfoPage> {
                               left: 30, top: 30, right: 20, bottom: 0),
                           color: Colors.grey,
                           child: Center(
-                            child: Text('照片'),
+                            child: Image.network(Petinfo['image']),
                           ),
                           width: 330,
                           height: 150,
@@ -156,20 +160,38 @@ class _PetInfoPage extends State<PetInfoPage> {
                             alignment: Alignment.bottomLeft,
                             margin: const EdgeInsets.only(
                                 left: 0, top: 10, right: 0, bottom: 0),
-                            child: TextFormField(
-                                initialValue: Petinfo['type']['typename'],
-                                readOnly: read,
-                                keyboardType: TextInputType.text,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  isCollapsed: true,
-                                  contentPadding: EdgeInsets.symmetric(
-                                      horizontal: 8, vertical: 15),
-                                  hintStyle: TextStyle(
-                                    color: Colors.grey,
-                                  ),
-                                )
-                            )),
+                            child:
+                            FutureBuilder<Map<String, dynamic>>(
+                              future: repository.getPettype(Petinfo['type']),
+                              builder:(BuildContext context, AsyncSnapshot snapshot) {
+                                if (snapshot.connectionState == ConnectionState.done) {
+                                  if (snapshot.hasError) {
+                                    // 请求失败，显示错误
+                                    return Text("Error: ${snapshot.error}");
+                                  } else {
+                                    // 请求成功，显示数据
+                                    return TextFormField(
+                                        initialValue: snapshot.data['typename'],
+                                        readOnly: read,
+                                        keyboardType: TextInputType.text,
+                                        decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          isCollapsed: true,
+                                          contentPadding: EdgeInsets.symmetric(
+                                              horizontal: 8, vertical: 15),
+                                          hintStyle: TextStyle(
+                                            color: Colors.grey,
+                                          ),
+                                        )
+                                    );
+                                  }
+                                } else {
+                                  // 请求未结束，显示loading
+                                  return CircularProgressIndicator();
+                                }
+                              }
+                            ),
+                        ),
                       ],
                     ),
                     Row(
