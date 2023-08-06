@@ -38,9 +38,28 @@
   </script>
   <!-- This script adds the flutter initialization JS code -->
   <script src="flutter.js" defer></script>
+  <!--Firebase-->
+  <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-messaging.js"></script>
 </head>
 <body>
   <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyA1FevAEUfg7u_tmhjPKGLJfVFBiQaghCY",
+      authDomain: "petmonitoringsystem-729da.firebaseapp.com",
+      projectId: "petmonitoringsystem-729da",
+      storageBucket: "petmonitoringsystem-729da.appspot.com",
+      messagingSenderId: "2 18937674834",
+      appId: "1:218937674834:web:2961695e7663494adb638b",
+      measurementId: "G-D4TRM99C0G"
+    };
+    firebase.initializeApp(firebaseConfig);
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register("/firebase-messaging-sw.js");
+      });
+    }
+
     window.addEventListener('load', function(ev) {
       // Download main.dart.js
       _flutter.loader.loadEntrypoint({
