@@ -4,6 +4,8 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:petapp/Page/petInsert/petInsertPage.dart';
 import 'package:petapp/Page/petoverview/petOverview.dart';
 
+import '../web.dart';
+
 
 class HomePage extends StatefulWidget {
   @override

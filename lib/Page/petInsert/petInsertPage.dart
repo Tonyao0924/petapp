@@ -1,9 +1,13 @@
 
+
+import 'package:intl/intl.dart';
 import 'dart:io';
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:petapp/Page/petInsert/pet_api.dart';
 import 'package:petapp/Page/petInsert/upload_image_widget.dart';
-
+import '../../model/Pet.dart';
 class PetInsertPage extends StatefulWidget {
   @override
   _PetInsertPage createState() => _PetInsertPage();
@@ -11,6 +15,24 @@ class PetInsertPage extends StatefulWidget {
 
 class _PetInsertPage extends State<PetInsertPage> {
   String _path = "";
+  String name = "";
+  int keeper = 0;
+  int type = 0;
+  String birthday = "";
+  String content = "";
+  PetRepository repository = PetRepository();
+  final TextEditingController Namecontroller = TextEditingController();
+  final TextEditingController Keepercontroller = TextEditingController();
+  final TextEditingController Typecontroller = TextEditingController();
+  final TextEditingController Contentcontroller = TextEditingController();
+  final dateFormatter = DateFormat('yyyy-MM-dd');
+  late DateTime selectedDateTime;
+  @override
+  void initState() {
+    super.initState();
+    var now = DateTime.now();
+    selectedDateTime = now;
+  }
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -115,8 +137,9 @@ class _PetInsertPage extends State<PetInsertPage> {
                               Container(
                                   margin: const EdgeInsets.only(
                                       left: 0, top: 0, right: 0, bottom: 0),
-                                  child: const TextField(
+                                  child: TextField(
                                       keyboardType: TextInputType.text,
+                                      controller: Namecontroller,
                                       decoration: InputDecoration(
                                         isCollapsed: true,
                                         contentPadding: EdgeInsets.symmetric(
@@ -136,28 +159,38 @@ class _PetInsertPage extends State<PetInsertPage> {
                                         ),
                                       ))),
                               Container(
-                                  margin: const EdgeInsets.only(
-                                      left: 0, top: 14, right: 0, bottom: 0),
-                                  child: const TextField(
-                                      keyboardType: TextInputType.text,
-                                      decoration: InputDecoration(
-                                        isCollapsed: true,
-                                        contentPadding: EdgeInsets.symmetric(
-                                            horizontal: 8, vertical: 15),
-                                        hintText: '出生年月日',
-                                        hintStyle: TextStyle(
-                                          color: Color(0xFFfd9340),
-                                        ),
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(13),
-                                          ),
-                                          borderSide: BorderSide(
-                                            color: Color(0xFFDADADA),
-                                            width: 1,
+                                alignment:Alignment.centerLeft,
+                                width: 200,
+                                margin: const EdgeInsets.only(
+                                        left: 0, top: 14, right: 0, bottom: 0),
+                              decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(15),
+                                          border: Border.all(
+                                          color: Color(0xFFDADADA),
+                                          width: 1.0,
+                                          style: BorderStyle.solid
                                           ),
                                         ),
-                                      ))),
+                                child: TextButton(
+                                  child: Text(
+                                    dateFormatter.format(selectedDateTime),
+                                    style: TextStyle(color: Colors.black),
+                                    textAlign: TextAlign.left,
+                                  ),
+                                  onPressed: () async{
+                                    final result = await showDatePicker(
+                                        context: context,
+                                        initialDate: DateTime.now(),
+                                        firstDate: DateTime(2020, 01),
+                                        lastDate: DateTime(2100, 12));
+                                    if (result != null) {
+                                      setState(() {
+                                        selectedDateTime = result;
+                                      });
+                                    }
+                                  },
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -168,8 +201,9 @@ class _PetInsertPage extends State<PetInsertPage> {
                         alignment: Alignment.bottomLeft,
                         margin:
                         const EdgeInsets.only(left: 0, top: 20, right: 0, bottom: 0),
-                        child: const TextField(
+                        child: TextField(
                             keyboardType: TextInputType.text,
+                            controller: Typecontroller,
                             decoration: InputDecoration(
                               isCollapsed: true,
                               contentPadding:
@@ -193,7 +227,7 @@ class _PetInsertPage extends State<PetInsertPage> {
                         alignment: Alignment.bottomLeft,
                         margin:
                         const EdgeInsets.only(left: 0, top: 20, right: 0, bottom: 0),
-                        child: const TextField(
+                        child: TextField(
                             keyboardType: TextInputType.text,
                             decoration: InputDecoration(
                               isCollapsed: true,
@@ -268,7 +302,8 @@ class _PetInsertPage extends State<PetInsertPage> {
                         alignment: Alignment.bottomLeft,
                         margin:
                         const EdgeInsets.only(left: 0, top: 20, right: 0, bottom: 0),
-                        child: const TextField(
+                        child: TextField(
+                            controller: Contentcontroller,
                             keyboardType: TextInputType.text,
                             decoration: InputDecoration(
                               isCollapsed: true,
@@ -293,8 +328,9 @@ class _PetInsertPage extends State<PetInsertPage> {
                         alignment: Alignment.bottomLeft,
                         margin:
                         const EdgeInsets.only(left: 0, top: 20, right: 0, bottom: 0),
-                        child: const TextField(
+                        child: TextField(
                             keyboardType: TextInputType.text,
+                            controller: Keepercontroller,
                             decoration: InputDecoration(
                               isCollapsed: true,
                               contentPadding:
@@ -349,7 +385,18 @@ class _PetInsertPage extends State<PetInsertPage> {
                                             RoundedRectangleBorder(
                                                 borderRadius:
                                                 BorderRadius.circular(18.76)))),
-                                    onPressed: () {},
+                                    onPressed: () async {
+                                      var PetCreateformdata = FormData.fromMap({
+                                        'name': Namecontroller.text,
+                                        'keeper': int.parse(Keepercontroller.text),
+                                        'type':Typecontroller.text,
+                                        'birthday':dateFormatter.format(selectedDateTime),
+                                        'content': Contentcontroller.text,
+                                        'image': await MultipartFile.fromFile(_path, filename: Namecontroller.text+'.jpg'),
+                                      });
+                                      print(_path);
+                                      repository.createPet(PetCreateformdata);
+                                    },
                                     child: Text(
                                       '新增寵物',
                                       style: TextStyle(color: Colors.white),

@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:petapp/Page/petlist/petList_cat.dart';
-import 'package:petapp/Page/petlist/petList_dog.dart';
-import 'package:petapp/Page/petlist/petList_mouse.dart';
-import 'package:petapp/Page/petlist/petList_others.dart';
+import '../petInsert/pet_api.dart';
+import '../petlist/petList.dart';
 
 class PetOverview extends StatefulWidget {
   @override
@@ -11,6 +9,9 @@ class PetOverview extends StatefulWidget {
 }
 
 class _PetOverview extends State<PetOverview> {
+  PetRepository repository = PetRepository();
+  Future<List<dynamic>> petList = Future<List<dynamic>>.value(null);
+
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -76,10 +77,20 @@ class _PetOverview extends State<PetOverview> {
                                   fit: BoxFit.cover, // 圖片填充方式
                                   child: InkWell(
                                     onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        OverViewNavs[index].route
-                                      );
+                                      print("SSS");
+                                      repository.getPetList(OverViewNavs[index].type)
+                                          .then((value)=>
+                                          Navigator.push(
+                                            context,MaterialPageRoute(
+                                            builder: (context) => PetList(),
+                                            settings: RouteSettings(
+                                            arguments: value,
+                                          ),
+                                          ),)
+                                          ).catchError((error) {
+                                        // 處理錯誤情況
+                                        print(error);
+                                      });
                                       // 按鈕點擊事件處理
                                     },
                                   ),
@@ -92,23 +103,19 @@ class _PetOverview extends State<PetOverview> {
                     ],
                   );
                 })));
+
   }
 }
 class OverViewAsset {
   final String src;
-  final Route route;
-
-  OverViewAsset(this.src,
-      {required this.route});
+  final String type;
+  OverViewAsset(this.src,this.type,
+      );
 }
 
 List<OverViewAsset> OverViewNavs = [
-  OverViewAsset("assets/images/dog_type.png",
-      route: MaterialPageRoute(builder: (context) => PetList_dog())),
-  OverViewAsset("assets/images/cat_type.png",
-      route: MaterialPageRoute(builder: (context) => PetList_cat())),
-  OverViewAsset("assets/images/mouse_type.png",
-      route: MaterialPageRoute(builder: (context) => PetList_mouse())),
-  OverViewAsset("assets/images/other_type.png",
-      route: MaterialPageRoute(builder: (context) => PetList_others())),
+  OverViewAsset("assets/images/dog_type.png","dog",),
+  OverViewAsset("assets/images/cat_type.png","cat",),
+  OverViewAsset("assets/images/mouse_type.png","mouse",),
+  OverViewAsset("assets/images/other_type.png","other",)
 ];
