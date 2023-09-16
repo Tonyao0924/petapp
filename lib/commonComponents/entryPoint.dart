@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:petapp/Page/Home.dart';
+import 'package:petapp/Page/login/loginPage.dart';
 import 'package:petapp/commonComponents/constants.dart';
 import 'package:petapp/utils/riveUtils.dart';
 import 'package:rive/rive.dart';
+
+import '../Page/kibanatutorial/kibanaTutorial.dart';
+import '../Page/petInfo/petInfoPage.dart';
+import '../Page/petoverview/petOverview.dart';
 
 class EntryPoint extends StatefulWidget {
   const EntryPoint({Key? key}) : super(key: key);
@@ -14,11 +19,28 @@ class EntryPoint extends StatefulWidget {
 class _EntryPointState extends State<EntryPoint> {
   RiveAsset selectedBottomNav = bottomNavs.first;
 
+  int selectedPageIndex = 0;
+
+  Widget getSelectedPage() {
+    if (selectedPageIndex == 0) {
+      return HomePage();
+    } else if (selectedPageIndex == 1) {
+      return LoginPage();
+    }else if (selectedPageIndex == 2) {
+      return PetOverview();
+    } else if (selectedPageIndex == 3) {
+      return KibanaTutorial();
+    }
+    // 添加其他页面的逻辑
+    return HomePage(); // 默认返回一个空容器
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
-      body: HomePage(),
+      body: getSelectedPage(),
+      // body: HomePage(),
       bottomNavigationBar: SafeArea(
         child: Container(
           padding: EdgeInsets.all(12),
@@ -34,12 +56,15 @@ class _EntryPointState extends State<EntryPoint> {
             children: [
               ...List.generate(
                 bottomNavs.length,
-                (index) => GestureDetector(
+                    (index) => GestureDetector(
                   onTap: () {
                     bottomNavs[index].input!.change(true);
                     if (bottomNavs[index] != selectedBottomNav){
                       setState(() {
                         selectedBottomNav = bottomNavs[index];
+                        selectedPageIndex = index; // 更新选定的页面索引
+                        print(1111111111);
+                        print(selectedPageIndex);
                       });
                     }
                     Future.delayed(Duration(seconds: 1),(){
@@ -55,8 +80,8 @@ class _EntryPointState extends State<EntryPoint> {
                         height: 4,
                         width: bottomNavs[index] == selectedBottomNav ? 20 : 0,
                         decoration: const BoxDecoration(
-                          color: Color(0xFF81B4FF),
-                          borderRadius: BorderRadius.all(Radius.circular(12))
+                            color: Color(0xFF81B4FF),
+                            borderRadius: BorderRadius.all(Radius.circular(12))
                         ),
                       ),
                       SizedBox(
@@ -70,11 +95,11 @@ class _EntryPointState extends State<EntryPoint> {
                             onInit: (artboard) {
                               RiveAsset currentNav = bottomNavs[index];
                               StateMachineController controller =
-                                  RiveUtils.getRiveController(artboard,
-                                      StateMachineName:
-                                          bottomNavs[index].stateMachineName);
+                              RiveUtils.getRiveController(artboard,
+                                  StateMachineName:
+                                  bottomNavs[index].stateMachineName);
                               bottomNavs[index].input =
-                                  controller.findSMI("active") as SMIBool;
+                              controller.findSMI("active") as SMIBool;
                             },
                           ),
                         ),
@@ -97,9 +122,9 @@ class RiveAsset {
 
   RiveAsset(this.src,
       {required this.artboard,
-      required this.stateMachineName,
-      required this.title,
-      this.input});
+        required this.stateMachineName,
+        required this.title,
+        this.input});
   set setInput(SMIBool status) {
     input = status;
   }
