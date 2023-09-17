@@ -1,11 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:petapp/Page/kibanatutorial/kibanaTutorial.dart';
 import 'package:petapp/Page/petInsert/petInsertPage.dart';
+import 'package:petapp/Page/petInsert/pet_api.dart';
 import 'package:petapp/Page/petoverview/petOverview.dart';
 
-import '../web.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -14,13 +13,24 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePage extends State<HomePage> {
+
+  PetRepository repository = PetRepository();
+  List imgUrllist = [];
+  @override
+  void initState() {
+    repository.getPetListAll().then((value) =>
+      imgUrllist = value
+    );
+  }
   List _imageUrls = [
-    "assets/images/swiper1.png",
-    "assets/images/swiper2.png",
-    "assets/images/swiper3.png"
+    'http://140.125.207.230:8000/media/images/LINE_ALBUM_%E8%88%87%E5%AE%B6%E4%BA%BA%E5%80%91%E7%9A%84%E5%9B%9E%E6%86%B6_230228_47.jpg',
+
   ];
   @override
   Widget build(BuildContext context) {
+    for(var item in imgUrllist){
+      _imageUrls.add(item['image']);
+    }
     return Scaffold(
       body: Scrollbar(
         thumbVisibility: true,
@@ -285,7 +295,7 @@ class _HomePage extends State<HomePage> {
                               itemCount: _imageUrls.length,
                               autoplay: false,
                               itemBuilder: (BuildContext context, int index) {
-                                return Image.asset(
+                                return Image.network(
                                   _imageUrls[index],
                                   fit: BoxFit.fill,
                                 );
