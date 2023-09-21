@@ -16,21 +16,11 @@ class _HomePage extends State<HomePage> {
 
   PetRepository repository = PetRepository();
   List imgUrllist = [];
-  @override
-  void initState() {
-    repository.getPetListAll().then((value) =>
-      imgUrllist = value
-    );
-  }
   List _imageUrls = [
     'http://140.125.207.230:8000/media/images/LINE_ALBUM_%E8%88%87%E5%AE%B6%E4%BA%BA%E5%80%91%E7%9A%84%E5%9B%9E%E6%86%B6_230228_47.jpg',
-
   ];
   @override
   Widget build(BuildContext context) {
-    for(var item in imgUrllist){
-      _imageUrls.add(item['image']);
-    }
     return Scaffold(
       body: Scrollbar(
         thumbVisibility: true,
@@ -287,23 +277,45 @@ class _HomePage extends State<HomePage> {
                       alignment: Alignment.bottomCenter,
                       margin: const EdgeInsets.only(
                           left: 0, top: 25, right: 0, bottom: 20),
-                      child: Center(
-                          child: Container(
-                            width: 260,
-                            height: 232,
-                            child: Swiper(
-                              itemCount: _imageUrls.length,
-                              autoplay: false,
-                              itemBuilder: (BuildContext context, int index) {
-                                return Image.network(
-                                  _imageUrls[index],
-                                  fit: BoxFit.fill,
-                                );
-                              },
-                              scrollDirection: Axis.horizontal,
-                              control: new SwiperControl(),
+                      child:
+                            FutureBuilder<List<dynamic>>(
+                            future: repository.getPetListAll(),
+                            builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
+                            if (snapshot.connectionState == ConnectionState.waiting) {
+                            return CircularProgressIndicator(); // 加载指示器或占位符
+                            } else if (snapshot.hasError) {
+                            return Text('Error: ${snapshot.error}');
+                            } else {
+                              print("snapshot");
+                              print(snapshot.data);
+                              for(var i = 0 ; i < 30;i++){
+                                if(snapshot.data![i]['image'] != null){
+                                  _imageUrls.add(snapshot.data![i]['image']);
+                                  print("for");
+                                  print(snapshot.data![i]['image']);
+                                }
+                              }
+                              return Center(
+                                  child: Container(
+                                    width: 260,
+                                    height: 232,
+                                    child: Swiper(
+                                      itemCount: _imageUrls.length,
+                                      autoplay: false,
+                                      itemBuilder: (BuildContext context, int index) {
+                                        return Image.network(
+                                          _imageUrls[index],
+                                          fit: BoxFit.fill,
+                                        );
+                                      },
+                                      scrollDirection: Axis.horizontal,
+                                      control: new SwiperControl(),
+                                    ),
+                                  )
+                              );
+                            }
+                            },
                             ),
-                          )),
                     ),
                   ),
                 ],
