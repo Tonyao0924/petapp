@@ -9,6 +9,7 @@ abstract class ApiPetData {
   Future<String> createPet(FormData body);
 
   Future<List<dynamic>> getPetList(String type);
+  Future<List<dynamic>> getPetListAll();
 
   Future<Map<String, dynamic>> getPetinfo(int id);
 
@@ -62,6 +63,25 @@ class PetRepository implements ApiPetData {
   @override
   Future<List<dynamic>> getPetList(String type) async {
     var url = Uri.parse('$domain/pet/list/$type/'); // 替換成你要串接的API網址
+
+    var response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      // 成功接收到資料
+      var data = json.decode(response.body); // 取得回傳的資料內容
+      print("data");
+      print(data);
+      // 在這裡處理資料
+      return data;
+    } else {
+      // 請求失敗
+      throw Exception('API 請求失敗');
+    }
+  }
+
+  @override
+  Future<List<dynamic>> getPetListAll() async {
+    var url = Uri.parse('$domain/pet/list/'); // 替換成你要串接的API網址
 
     var response = await http.get(url);
 

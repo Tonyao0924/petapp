@@ -1,11 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:petapp/Page/kibanatutorial/kibanaTutorial.dart';
 import 'package:petapp/Page/petInsert/petInsertPage.dart';
+import 'package:petapp/Page/petInsert/pet_api.dart';
 import 'package:petapp/Page/petoverview/petOverview.dart';
 
-import '../web.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -14,10 +13,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePage extends State<HomePage> {
+
+  PetRepository repository = PetRepository();
+  List imgUrllist = [];
   List _imageUrls = [
-    "assets/images/swiper1.png",
-    "assets/images/swiper2.png",
-    "assets/images/swiper3.png"
+    'http://140.125.207.230:8000/media/images/LINE_ALBUM_%E8%88%87%E5%AE%B6%E4%BA%BA%E5%80%91%E7%9A%84%E5%9B%9E%E6%86%B6_230228_47.jpg',
   ];
   @override
   Widget build(BuildContext context) {
@@ -277,23 +277,45 @@ class _HomePage extends State<HomePage> {
                       alignment: Alignment.bottomCenter,
                       margin: const EdgeInsets.only(
                           left: 0, top: 25, right: 0, bottom: 20),
-                      child: Center(
-                          child: Container(
-                            width: 260,
-                            height: 232,
-                            child: Swiper(
-                              itemCount: _imageUrls.length,
-                              autoplay: false,
-                              itemBuilder: (BuildContext context, int index) {
-                                return Image.asset(
-                                  _imageUrls[index],
-                                  fit: BoxFit.fill,
-                                );
-                              },
-                              scrollDirection: Axis.horizontal,
-                              control: new SwiperControl(),
+                      child:
+                            FutureBuilder<List<dynamic>>(
+                            future: repository.getPetListAll(),
+                            builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
+                            if (snapshot.connectionState == ConnectionState.waiting) {
+                            return CircularProgressIndicator(); // 加载指示器或占位符
+                            } else if (snapshot.hasError) {
+                            return Text('Error: ${snapshot.error}');
+                            } else {
+                              print("snapshot");
+                              print(snapshot.data);
+                              for(var i = 0 ; i < 30;i++){
+                                if(snapshot.data![i]['image'] != null){
+                                  _imageUrls.add(snapshot.data![i]['image']);
+                                  print("for");
+                                  print(snapshot.data![i]['image']);
+                                }
+                              }
+                              return Center(
+                                  child: Container(
+                                    width: 260,
+                                    height: 232,
+                                    child: Swiper(
+                                      itemCount: _imageUrls.length,
+                                      autoplay: false,
+                                      itemBuilder: (BuildContext context, int index) {
+                                        return Image.network(
+                                          _imageUrls[index],
+                                          fit: BoxFit.fill,
+                                        );
+                                      },
+                                      scrollDirection: Axis.horizontal,
+                                      control: new SwiperControl(),
+                                    ),
+                                  )
+                              );
+                            }
+                            },
                             ),
-                          )),
                     ),
                   ),
                 ],
