@@ -349,6 +349,34 @@ class _PetInsertPage extends State<PetInsertPage> {
                                 ),
                               ),
                             ))),
+                    // API要修改的部分
+                    Container(
+                        width: 341,
+                        alignment: Alignment.bottomLeft,
+                        margin:
+                        const EdgeInsets.only(left: 0, top: 20, right: 0, bottom: 0),
+                        child: TextField(
+                          // API要修改的部分
+                            keyboardType: TextInputType.text,
+                            controller: Keepercontroller,
+                            decoration: InputDecoration(
+                              isCollapsed: true,
+                              contentPadding:
+                              EdgeInsets.symmetric(horizontal: 8, vertical: 15),
+                              hintText: '機器綁定碼',
+                              hintStyle: TextStyle(
+                                color: Color(0xFFfd9340),
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(13),
+                                ),
+                                borderSide: BorderSide(
+                                  color: Color(0xFFDADADA),
+                                  width: 1,
+                                ),
+                              ),
+                            ))),
                     Container(
                       margin:
                       const EdgeInsets.only(left: 0, top: 20, right: 0, bottom: 0),
@@ -387,6 +415,7 @@ class _PetInsertPage extends State<PetInsertPage> {
                                                 BorderRadius.circular(18.76)))),
                                     onPressed: () async {
                                       var PetCreateformdata = FormData.fromMap({
+                                        // API要修改的部分
                                         'name': Namecontroller.text,
                                         'keeper': int.parse(Keepercontroller.text),
                                         'type':Typecontroller.text,
