@@ -21,7 +21,7 @@ class _PetInsertPage extends State<PetInsertPage> {
   String birthday = "";
   String content = "";
   PetRepository repository = PetRepository();
-  String selectedType = '狗'; // 初始选择
+  String selectedType = '狗';
   List<String> petTypes = ['狗', '猫', '鼠', '其他'];
   String selectedpetGender = '公';
   List<String> petGender = ['公','母'];
