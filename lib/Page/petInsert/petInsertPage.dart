@@ -22,7 +22,7 @@ class _PetInsertPage extends State<PetInsertPage> {
   String content = "";
   PetRepository repository = PetRepository();
   String selectedType = '狗'; // 初始选择
-  List<String> petTypes = ['狗', '猫', '鼠', '其他']; // 预定义的宠物类型选项列表
+  List<String> petTypes = ['狗', '猫', '鼠', '其他'];
   String selectedpetGender = '公';
   List<String> petGender = ['公','母'];
   final TextEditingController Namecontroller = TextEditingController();
@@ -205,11 +205,11 @@ class _PetInsertPage extends State<PetInsertPage> {
                         Container(
                           width: 170,
                           alignment: Alignment.bottomLeft,
-                          margin: const EdgeInsets.only(left: 25, top: 20, right: 20, bottom: 0), // 增加右侧边距
+                          margin: const EdgeInsets.only(left: 25, top: 20, right: 20, bottom: 0), // 增加右側邊距
                           child: Row(
                             children: [
-                              Text('寵物類型',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16,color: Colors.grey),), // 额外文本
-                              SizedBox(width: 30), // 增加垂直间距
+                              Text('寵物類型',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16,color: Colors.grey),),
+                              SizedBox(width: 30), // 增加垂直間距
                               DropdownButton<String>(
                                 value: selectedType,
                                 onChanged: (newValue) {
@@ -223,7 +223,7 @@ class _PetInsertPage extends State<PetInsertPage> {
                                     child: Text(
                                       type,
                                       style: TextStyle(
-                                        color: Color(0xFFfd9340), // 设置选项内的文字颜色
+                                        color: Color(0xFFfd9340),
                                       ),
                                     ),
                                   );
@@ -238,8 +238,8 @@ class _PetInsertPage extends State<PetInsertPage> {
                           margin: const EdgeInsets.only(left: 0, top: 20, right: 0, bottom: 0),
                           child: Row(
                             children: [
-                              Text('寵物性別',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16,color: Colors.grey),), // 额外文本
-                              SizedBox(width: 30), // 增加垂直间距
+                              Text('寵物性別',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16,color: Colors.grey),),
+                              SizedBox(width: 30),
                               DropdownButton<String>(
                                 value: selectedpetGender,
                                 onChanged: (newValue) {
