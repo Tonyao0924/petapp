@@ -1,16 +1,18 @@
 
+import 'dart:html';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import '../../Api/chatGPTAPI.dart';
 
 class ChatRoom extends StatefulWidget{
   @override
   _ChatRoom createState() => _ChatRoom();
 }
-
 class _ChatRoom extends State<ChatRoom>{
   ScrollController scroller = ScrollController();
   final TextEditingController userentertext = TextEditingController();
+
   @override
   Widget build(BuildContext csontext) {
     final UniqueKey centerKey = UniqueKey();
@@ -78,31 +80,56 @@ class _ChatRoom extends State<ChatRoom>{
                 ),
               ],
             ),
+            Row(
+              children: <Widget>[
+                Container(
+                    margin: const EdgeInsets.only(
+                        left: 0, top: 0, right: 0, bottom: 0),
+                    child: TextField(
+                        keyboardType: TextInputType.text,
+                        controller: userentertext,
+                        decoration: InputDecoration(
+                          isCollapsed: true,
+                          contentPadding: EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 15),
+                          hintText: '請輸入您要詢問何事？',
+                          hintStyle: TextStyle(
+                            color: Color(0xFFfd9340),
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(13),
+                            ),
+                            borderSide: BorderSide(
+                              color: Color(0xFFDADADA),
+                              width: 1,
+                            ),
+                          ),
+                        )
+                    )
+                ),
+                Container(
+                  width: 341,
+                  height: 51,
+                  child: TextButton(
+                    style: ButtonStyle(
+                        shape: MaterialStateProperty.all(
+                            RoundedRectangleBorder(
+                                borderRadius:
+                                BorderRadius.circular(18.76)))),
+                    onPressed: () async {
+                      getChatGPTResponse(userentertext.text);
+                      userentertext.clear();
+                    },
+                    child: Text(
+                      '發送訊息',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
+              ],
+            ),
 
-            Container(
-                margin: const EdgeInsets.only(
-                    left: 0, top: 0, right: 0, bottom: 0),
-                child: TextField(
-                    keyboardType: TextInputType.text,
-                    controller: userentertext,
-                    decoration: InputDecoration(
-                      isCollapsed: true,
-                      contentPadding: EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 15),
-                      hintText: '請輸入您要詢問何事？',
-                      hintStyle: TextStyle(
-                        color: Color(0xFFfd9340),
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(13),
-                        ),
-                        borderSide: BorderSide(
-                          color: Color(0xFFDADADA),
-                          width: 1,
-                        ),
-                      ),
-                    ))),
           ],
         ),
 

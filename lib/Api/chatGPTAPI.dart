@@ -2,10 +2,10 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 Future<Map<String, dynamic>> getChatGPTResponse(String inputText) async {
-  final apiKey = 'YOUR_API_KEY_HERE'; // 用您的API密钥替换这里
+  final apiKey = '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'; // 用您的API密钥替换这里
 
   final response = await http.post(
-    Uri.parse('https://api.openai.com/v1/engines/davinci/completions'),
+    Uri.parse('https://api.openai.com/v1/chat/completions'),
     headers: {
       'Authorization': 'Bearer $apiKey',
       'Content-Type': 'application/json',
