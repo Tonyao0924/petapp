@@ -23,6 +23,7 @@ class _PetInsertPage extends State<PetInsertPage> {
   PetRepository repository = PetRepository();
   bool gender = true;
   bool is_neutered = true;
+  String actvity_level ='low';
   String selectedType = '狗';
   List<String> petTypes = ['狗', '猫', '鼠', '其他'];
   String selectedpetGender = '公';
@@ -331,6 +332,11 @@ class _PetInsertPage extends State<PetInsertPage> {
                                     setState(() {
                                       selectedActivityLevel = newValue!;
                                     });
+                                    switch(newValue){
+                                      case '低':actvity_level='low';break;
+                                      case '中':actvity_level='moderate';break;
+                                      case '高':actvity_level='high';break;
+                                    }
                                   },
                                   items: ActivityLevel.map((petGender) {
                                     return DropdownMenuItem(
@@ -526,7 +532,7 @@ class _PetInsertPage extends State<PetInsertPage> {
                                           'weight':Weightcontroller.text,
                                           'gender':gender,
                                           'is_neutered':is_neutered,
-                                          'activity_level':selectedActivityLevel.toString()
+                                          'activity_level':actvity_level
                                         });
                                         print(_path);
                                         repository.createPet(PetCreateformdata);
@@ -539,6 +545,7 @@ class _PetInsertPage extends State<PetInsertPage> {
                                         print(PetCreateformdata.toString());
                                         print('----------------------------------------------');
                                         print(dateFormatter.format(selectedDateTime));
+                                        print(actvity_level);
                                       },
                                       child: Text(
                                         '新增寵物',
