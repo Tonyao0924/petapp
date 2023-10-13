@@ -23,7 +23,8 @@ class _PetInsertPage extends State<PetInsertPage> {
   PetRepository repository = PetRepository();
   bool gender = true;
   bool is_neutered = true;
-  String actvity_level ='low';
+  String activity_level = 'low';
+  int pettype =1;
   String selectedType = '狗';
   List<String> petTypes = ['狗', '猫', '鼠', '其他'];
   String selectedpetGender = '公';
@@ -228,6 +229,12 @@ class _PetInsertPage extends State<PetInsertPage> {
                                     setState(() {
                                       selectedType = newValue!;
                                     });
+                                    switch(newValue){
+                                      case '狗' : pettype =1; break;
+                                      case '貓' : pettype =2; break;
+                                      case '鼠' : pettype =3; break;
+                                      case '其他' : pettype =4; break;
+                                    }
                                   },
                                   items: petTypes.map((type) {
                                     return DropdownMenuItem(
@@ -333,9 +340,9 @@ class _PetInsertPage extends State<PetInsertPage> {
                                       selectedActivityLevel = newValue!;
                                     });
                                     switch(newValue){
-                                      case '低':actvity_level='low';break;
-                                      case '中':actvity_level='moderate';break;
-                                      case '高':actvity_level='high';break;
+                                      case '低' : activity_level='low'; break;
+                                      case '中' : activity_level='moderate'; break;
+                                      case '高' : activity_level='high'; break;
                                     }
                                   },
                                   items: ActivityLevel.map((petGender) {
@@ -525,27 +532,26 @@ class _PetInsertPage extends State<PetInsertPage> {
                                           // API要修改的部分
                                           'name': Namecontroller.text,
                                           'keeper': int.parse(Keepercontroller.text),
-                                          'type':selectedType.toString(),
+                                          'type':pettype,
                                           'birthday':dateFormatter.format(selectedDateTime),
                                           'content': Contentcontroller.text,
-                                          'image': MultipartFile.fromFile(_path, filename: Namecontroller.text+'.jpg'),
                                           'weight':Weightcontroller.text,
                                           'gender':gender,
                                           'is_neutered':is_neutered,
-                                          'activity_level':actvity_level
+                                          'activity_level':activity_level,
+                                          'image': await MultipartFile.fromFile(_path, filename: Namecontroller.text+'.jpg'),
                                         });
                                         print(_path);
                                         repository.createPet(PetCreateformdata);
                                         print('11131`3131313131313');
                                         print(selectedType.toString());
-                                        print(Contentcontroller.text);
-                                        print(selectedActivityLevel.toString());
+                                        print(type);
+                                        print(activity_level);
                                         print(is_neutered);
                                         print(gender);
                                         print(PetCreateformdata.toString());
                                         print('----------------------------------------------');
                                         print(dateFormatter.format(selectedDateTime));
-                                        print(actvity_level);
                                       },
                                       child: Text(
                                         '新增寵物',
