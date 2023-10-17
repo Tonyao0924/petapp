@@ -1,25 +1,28 @@
 
-import 'dart:html';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../Api/chatGPTAPI.dart';
-
+import 'RightMessage.dart';
+import 'LeftMessage.dart';
 class ChatRoom extends StatefulWidget{
   @override
   _ChatRoom createState() => _ChatRoom();
 }
 class _ChatRoom extends State<ChatRoom>{
-  ScrollController scroller = ScrollController();
+  // ScrollController scroller = ScrollController();
   final TextEditingController userentertext = TextEditingController();
-
+  final List<Map<String, dynamic>>newData = [];
   @override
   Widget build(BuildContext csontext) {
     final UniqueKey centerKey = UniqueKey();
+    ScrollController scroller = ScrollController();
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("照顧建議"
+        title: Text(
+          '照顧建議',
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -43,8 +46,10 @@ class _ChatRoom extends State<ChatRoom>{
           ),
         ],
       ),
-      body: Column(
+      body:
+      Column(
           children: <Widget>[
+            Expanded(child:
             CustomScrollView(
               controller: scroller,
               reverse: true,
@@ -54,10 +59,16 @@ class _ChatRoom extends State<ChatRoom>{
                   delegate: SliverChildBuilderDelegate(
                         (BuildContext context, int index) {
                       var item = newData[index];
-                      if (item.type == "Right")
-                        return renderRightItem(item);
-                      else
-                        return renderLeftItem(item);
+                      if (item['role'] == "user"){
+                        print(item);
+                        return Container(
+                          child: RightMessage(item['message']),);
+                      }
+                      else{
+                        print(item);
+                        return Container(
+                          child: LeftMessage(item['message']));
+                      }
                     },
                     childCount: newData.length,
                   ),
@@ -66,32 +77,18 @@ class _ChatRoom extends State<ChatRoom>{
                   padding: EdgeInsets.zero,
                   key: centerKey,
                 ),
-                SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                        (BuildContext context, int index) {
-                      var item = loadMoreData[index];
-                      if (item.type == "Right")
-                        return renderRightItem(item);
-                      else
-                        return renderLeftItem(item);
-                    },
-                    childCount: loadMoreData.length,
-                  ),
-                ),
               ],
             ),
-            Row(
-              children: <Widget>[
+            ),
                 Container(
-                    margin: const EdgeInsets.only(
-                        left: 0, top: 0, right: 0, bottom: 0),
+                  margin: const EdgeInsets.only(
+                      left: 0, top: 0, right: 0, bottom: 0),
+                  child: SizedBox(
+                    width: 250,
                     child: TextField(
                         keyboardType: TextInputType.text,
                         controller: userentertext,
                         decoration: InputDecoration(
-                          isCollapsed: true,
-                          contentPadding: EdgeInsets.symmetric(
-                              horizontal: 8, vertical: 15),
                           hintText: '請輸入您要詢問何事？',
                           hintStyle: TextStyle(
                             color: Color(0xFFfd9340),
@@ -106,33 +103,54 @@ class _ChatRoom extends State<ChatRoom>{
                             ),
                           ),
                         )
-                    )
+                    ),),
                 ),
-                Container(
-                  width: 341,
-                  height: 51,
-                  child: TextButton(
-                    style: ButtonStyle(
-                        shape: MaterialStateProperty.all(
-                            RoundedRectangleBorder(
-                                borderRadius:
-                                BorderRadius.circular(18.76)))),
-                    onPressed: () async {
-                      getChatGPTResponse(userentertext.text);
-                      userentertext.clear();
-                    },
-                    child: Text(
-                      '發送訊息',
-                      style: TextStyle(color: Colors.white),
+                Center(
+                  child:
+                  Container(
+                    alignment: Alignment.center,
+                    child:
+                    TextButton(
+                      style: ButtonStyle(
+                          shape: MaterialStateProperty.all(
+                              RoundedRectangleBorder(
+                                  borderRadius:
+                                  BorderRadius.circular(18.76)))),
+                      onPressed: () async {
+                        print("send");
+                        newData.add({'role':'user','message':userentertext.text});
+                        final data =await getChatGPTResponse(userentertext.text);
+                        setState(() {
+                          newData.add({'role':'system','message':data});
+                        });
+                        print(newData);
+                        userentertext.clear();
+                      },
+                      child: Text(
+                        '發送訊息',
+                        style: TextStyle(color: Colors.black),
+                      ),
                     ),
                   ),
                 ),
-              ],
-            ),
-
           ],
         ),
-
     );
   }
+}
+
+class Message {
+  final String role;
+  final String message;
+
+  Message(this.role,this.message);
+
+  Message.fromJson(Map<String, dynamic> json)
+      : role = json['role'],
+        message = json['message'];
+
+  Map<String, dynamic> toJson() => {
+    'role': role,
+    'message': message,
+  };
 }

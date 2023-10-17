@@ -1,25 +1,27 @@
+import 'package:dart_openai/openai.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
-Future<Map<String, dynamic>> getChatGPTResponse(String inputText) async {
-  final apiKey = 'A'; // 用您的API密钥替换这里
-
-  final response = await http.post(
-    Uri.parse('https://api.openai.com/v1/chat/completions'),
-    headers: {
-      'Authorization': 'Bearer $apiKey',
-      'Content-Type': 'application/json',
-    },
-    body: jsonEncode({
-      'prompt': inputText,
-      'max_tokens': 50, // 根据您的需求设置参数
-    }),
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+Future<String> getChatGPTResponse(String inputText) async {
+  print(inputText);
+  await dotenv.load(fileName: ".env");
+  OpenAI.apiKey = dotenv.env['OPEN_AI_API_KEY']!;
+  final chatCompletion = await OpenAI.instance.chat.create(
+    model: 'gpt-3.5-turbo',
+    messages: [
+      OpenAIChatCompletionChoiceMessageModel(
+        content: inputText,
+        role: OpenAIChatMessageRole.user,
+      ),
+    ],
   );
-
-  if (response.statusCode == 200) {
-    final Map<String, dynamic> data = json.decode(response.body);
-    return data;
-  } else {
-    throw Exception('Failed to get response from ChatGPT API');
+  try{
+    print(chatCompletion.choices.first.message.content);
+    return chatCompletion.choices.first.message.content;
   }
+  on RequestFailedException catch(e) {
+    return e.message;
+  }
+
+
 }
