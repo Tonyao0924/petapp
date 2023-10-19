@@ -26,14 +26,14 @@ class _EntryPointState extends State<EntryPoint> {
     if (selectedPageIndex == 0) {
       return HomePage();
     } else if (selectedPageIndex == 1) {
-      return LoginPage();
-    }else if (selectedPageIndex == 2) {
       return ChatRoom();
+    }else if (selectedPageIndex == 2) {
+      return KibanaTutorial();
     } else if (selectedPageIndex == 3) {
       return KibanaTutorial();
     }
     // 添加其他页面的逻辑
-    return HomePage(); // 默认返回一个空容器
+    return LoginPage(); // 默认返回一个空容器
   }
 
   @override

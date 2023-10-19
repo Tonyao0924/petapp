@@ -26,15 +26,6 @@ class _ChatRoom extends State<ChatRoom>{
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: GestureDetector(
-          child: Icon(
-            Icons.arrow_back_ios,
-            color: Colors.black,
-          ),
-          onTap: () {
-            Navigator.pop(context);
-          },
-        ),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.menu),
@@ -52,8 +43,6 @@ class _ChatRoom extends State<ChatRoom>{
             Expanded(child:
             CustomScrollView(
               controller: scroller,
-              reverse: true,
-              center: centerKey,
               slivers: [
                 SliverList(
                   delegate: SliverChildBuilderDelegate(
