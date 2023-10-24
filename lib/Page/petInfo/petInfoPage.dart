@@ -106,7 +106,7 @@ class _PetInfoPage extends State<PetInfoPage> {
                                   isCollapsed: true,
                                   contentPadding: EdgeInsets.symmetric(
                                       horizontal: 8, vertical: 15),
-                                  hintText: '名子',
+                                  hintText: '名字',
                                   hintStyle: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black,
@@ -156,7 +156,7 @@ class _PetInfoPage extends State<PetInfoPage> {
                                   isCollapsed: true,
                                   contentPadding: EdgeInsets.symmetric(
                                       horizontal: 8, vertical: 15),
-                                  hintText: '品種',
+                                  hintText: '種類',
                                   hintStyle: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black,

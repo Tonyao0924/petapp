@@ -21,6 +21,10 @@ class _PetInsertPage extends State<PetInsertPage> {
   String birthday = "";
   String content = "";
   PetRepository repository = PetRepository();
+  String selectedType = '狗';
+  List<String> petTypes = ['狗', '猫', '鼠', '其他'];
+  String selectedpetGender = '公';
+  List<String> petGender = ['公','母'];
   final TextEditingController Namecontroller = TextEditingController();
   final TextEditingController Keepercontroller = TextEditingController();
   final TextEditingController Typecontroller = TextEditingController();
@@ -196,32 +200,70 @@ class _PetInsertPage extends State<PetInsertPage> {
                         ),
                       ],
                     ),
-                    Container(
-                        width: 341,
-                        alignment: Alignment.bottomLeft,
-                        margin:
-                        const EdgeInsets.only(left: 0, top: 20, right: 0, bottom: 0),
-                        child: TextField(
-                            keyboardType: TextInputType.text,
-                            controller: Typecontroller,
-                            decoration: InputDecoration(
-                              isCollapsed: true,
-                              contentPadding:
-                              EdgeInsets.symmetric(horizontal: 8, vertical: 15),
-                              hintText: '寵物類別',
-                              hintStyle: TextStyle(
-                                color: Color(0xFFfd9340),
+                    Row(
+                      children: [
+                        Container(
+                          width: 170,
+                          alignment: Alignment.bottomLeft,
+                          margin: const EdgeInsets.only(left: 25, top: 20, right: 20, bottom: 0), // 增加右側邊距
+                          child: Row(
+                            children: [
+                              Text('寵物類型',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16,color: Colors.grey),),
+                              SizedBox(width: 30), // 增加垂直間距
+                              DropdownButton<String>(
+                                value: selectedType,
+                                onChanged: (newValue) {
+                                  setState(() {
+                                    selectedType = newValue!;
+                                  });
+                                },
+                                items: petTypes.map((type) {
+                                  return DropdownMenuItem(
+                                    value: type,
+                                    child: Text(
+                                      type,
+                                      style: TextStyle(
+                                        color: Color(0xFFfd9340),
+                                      ),
+                                    ),
+                                  );
+                                }).toList(),
                               ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(13),
-                                ),
-                                borderSide: BorderSide(
-                                  color: Color(0xFFDADADA),
-                                  width: 1,
-                                ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          width: 170,
+                          alignment: Alignment.bottomLeft,
+                          margin: const EdgeInsets.only(left: 0, top: 20, right: 0, bottom: 0),
+                          child: Row(
+                            children: [
+                              Text('寵物性別',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16,color: Colors.grey),),
+                              SizedBox(width: 30),
+                              DropdownButton<String>(
+                                value: selectedpetGender,
+                                onChanged: (newValue) {
+                                  setState(() {
+                                    selectedpetGender = newValue!;
+                                  });
+                                },
+                                items: petGender.map((petGender) {
+                                  return DropdownMenuItem(
+                                    value: petGender,
+                                    child: Text(
+                                      petGender,
+                                      style: TextStyle(
+                                        color: Color(0xFFfd9340),
+                                      ),
+                                    ),
+                                  );
+                                }).toList(),
                               ),
-                            ))),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                     Container(
                         width: 341,
                         alignment: Alignment.bottomLeft,
@@ -234,31 +276,6 @@ class _PetInsertPage extends State<PetInsertPage> {
                               contentPadding:
                               EdgeInsets.symmetric(horizontal: 8, vertical: 15),
                               hintText: '寵物品種',
-                              hintStyle: TextStyle(
-                                color: Color(0xFFfd9340),
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(13),
-                                ),
-                                borderSide: BorderSide(
-                                  color: Color(0xFFDADADA),
-                                  width: 1,
-                                ),
-                              ),
-                            ))),
-                    Container(
-                        width: 341,
-                        alignment: Alignment.bottomLeft,
-                        margin:
-                        const EdgeInsets.only(left: 0, top: 20, right: 0, bottom: 0),
-                        child: const TextField(
-                            keyboardType: TextInputType.text,
-                            decoration: InputDecoration(
-                              isCollapsed: true,
-                              contentPadding:
-                              EdgeInsets.symmetric(horizontal: 8, vertical: 15),
-                              hintText: '寵物性別',
                               hintStyle: TextStyle(
                                 color: Color(0xFFfd9340),
                               ),
