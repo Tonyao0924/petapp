@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:petapp/Page/chatroom/chatroom.dart';
 import 'package:petapp/Page/login/loginPage.dart';
 import 'package:petapp/Page/petInfo/petInfoPage.dart';
 import 'package:petapp/Page/petInsert/petInsertPage.dart';
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
         '/login':(context) => const LoginPage(),
         '/petInfo':(context) => PetInfoPage(),
         '/petInsert':(context) => PetInsertPage(),
+        '/chatroom':(context) => ChatRoom(),
       },
     );
   }

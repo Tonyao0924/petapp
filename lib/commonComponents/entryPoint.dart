@@ -5,6 +5,7 @@ import 'package:petapp/commonComponents/constants.dart';
 import 'package:petapp/utils/riveUtils.dart';
 import 'package:rive/rive.dart';
 
+import '../Page/chatroom/chatroom.dart';
 import '../Page/kibanatutorial/kibanaTutorial.dart';
 import '../Page/petInfo/petInfoPage.dart';
 import '../Page/petoverview/petOverview.dart';
@@ -25,14 +26,14 @@ class _EntryPointState extends State<EntryPoint> {
     if (selectedPageIndex == 0) {
       return HomePage();
     } else if (selectedPageIndex == 1) {
-      return LoginPage();
+      return ChatRoom();
     }else if (selectedPageIndex == 2) {
-      return PetOverview();
+      return KibanaTutorial();
     } else if (selectedPageIndex == 3) {
       return KibanaTutorial();
     }
     // 添加其他页面的逻辑
-    return HomePage(); // 默认返回一个空容器
+    return LoginPage(); // 默认返回一个空容器
   }
 
   @override
