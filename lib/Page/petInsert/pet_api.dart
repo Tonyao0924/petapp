@@ -41,25 +41,6 @@ class PetRepository implements ApiPetData {
     }
   }
 
-  // @override
-  // Future<String> getPetList(String type) async {
-  //   print(type);
-  //     var headers = {
-  //       'Content-Type': 'application/json'
-  //     };
-  //     var request = http.Request('GET', Uri.parse('$domain/pet/list/$type/'));
-  //     request.headers.addAll(headers);
-  //
-  //     http.StreamedResponse response = await request.send();
-  //     if (response.statusCode == 200) {
-  //       return await response.stream.bytesToString();
-  //
-  //     }
-  //     else {
-  //       return await response.stream.bytesToString();
-  //     }
-  // }
-
   @override
   Future<List<dynamic>> getPetList(String type) async {
     var url = Uri.parse('$domain/pet/list/$type/'); // 替換成你要串接的API網址
@@ -139,4 +120,5 @@ class PetRepository implements ApiPetData {
     // TODO: implement updatePet
     throw UnimplementedError();
   }
+
 }

@@ -15,6 +15,20 @@ class _PetInfoPage extends State<PetInfoPage> {
   @override
   Widget build(BuildContext context) {
     final Petinfo = ModalRoute.of(context)!.settings.arguments as Map<String,dynamic>;
+    var gender = "";
+    var is_neutered = "";
+    if(Petinfo['gender']){
+      gender = "男";
+    }
+    else{
+      gender = "女";
+    }
+    if(Petinfo['is_neutered']){
+      is_neutered = "已絕育";
+    }
+    else{
+      is_neutered = "未絕育";
+    }
     // TODO: implement build
     return Scaffold(
         appBar: AppBar(
@@ -277,7 +291,7 @@ class _PetInfoPage extends State<PetInfoPage> {
                             margin: const EdgeInsets.only(
                                 left: 0, top: 10, right: 0, bottom: 0),
                             child: TextFormField(
-                                initialValue: Petinfo['birthday'], //後端需要新增一個性別的key
+                                initialValue: gender, //後端需要新增一個性別的key
                                 readOnly: read,
                                 keyboardType: TextInputType.text,
                                 decoration: InputDecoration(
@@ -326,7 +340,55 @@ class _PetInfoPage extends State<PetInfoPage> {
                             margin: const EdgeInsets.only(
                                 left: 0, top: 10, right: 0, bottom: 0),
                             child: TextFormField(
-                                initialValue: Petinfo['birthday'], // 後端需要新增一個體重的key
+                                initialValue: Petinfo['weight'], // 後端需要新增一個體重的key
+                                readOnly: read,
+                                keyboardType: TextInputType.text,
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  isCollapsed: true,
+                                  contentPadding: EdgeInsets.symmetric(
+                                      horizontal: 8, vertical: 15),
+                                  hintStyle: TextStyle(
+                                    color: Colors.grey,
+                                  ),
+                                )
+                            )),
+                      ],
+                    ),Row(
+                      children: <Widget>[
+                        Container(
+                            width: 50,
+                            alignment: Alignment.bottomLeft,
+                            margin: const EdgeInsets.only(
+                                left: 25, top: 10, right: 0, bottom: 0),
+                            child: const TextField(
+                                keyboardType: TextInputType.text,
+                                readOnly: true,
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  isCollapsed: true,
+                                  contentPadding: EdgeInsets.symmetric(
+                                      horizontal: 8, vertical: 15),
+                                  hintText: '活躍',
+                                  hintStyle: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ))),
+                        Container(
+                          margin: EdgeInsets.only(
+                              left: 5, top: 15, right: 5, bottom: 0),
+                          color: Colors.black,
+                          width: 3,
+                          height: 20,
+                        ),
+                        Container(
+                            width: 200,
+                            alignment: Alignment.bottomLeft,
+                            margin: const EdgeInsets.only(
+                                left: 0, top: 10, right: 0, bottom: 0),
+                            child: TextFormField(
+                                initialValue: Petinfo['activity_level'], // 後端需要新增一個體重的key
                                 readOnly: read,
                                 keyboardType: TextInputType.text,
                                 decoration: InputDecoration(
@@ -375,7 +437,7 @@ class _PetInfoPage extends State<PetInfoPage> {
                             margin: const EdgeInsets.only(
                                 left: 0, top: 10, right: 0, bottom: 0),
                             child: TextFormField(
-                                initialValue: Petinfo['birthday'], // 後端需要新增一個絕育的key
+                                initialValue: is_neutered, // 後端需要新增一個絕育的key
                                 readOnly: read,
                                 keyboardType: TextInputType.text,
                                 decoration: InputDecoration(
@@ -409,7 +471,7 @@ class _PetInfoPage extends State<PetInfoPage> {
                             margin: const EdgeInsets.only(
                                 left: 0, top: 15, right: 0, bottom: 0),
                             child: TextFormField(
-                              initialValue: Petinfo['birthday'],
+                              initialValue: Petinfo['content'],
                               readOnly: read,
                                 keyboardType: TextInputType.multiline,
                                 maxLines: 8,
