@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:petapp/Page/Home.dart';
 import 'package:petapp/Page/login/loginPage.dart';
+import 'package:petapp/Page/profile/profilePage.dart';
 import 'package:petapp/commonComponents/constants.dart';
 import 'package:petapp/utils/riveUtils.dart';
 import 'package:rive/rive.dart';
@@ -31,6 +32,8 @@ class _EntryPointState extends State<EntryPoint> {
       return KibanaTutorial();
     } else if (selectedPageIndex == 3) {
       return KibanaTutorial();
+    }else if (selectedPageIndex == 4){
+      return ProfilePage();
     }
     // 添加其他页面的逻辑
     return LoginPage(); // 默认返回一个空容器
@@ -42,8 +45,7 @@ class _EntryPointState extends State<EntryPoint> {
       extendBody: true,
       body: getSelectedPage(),
       // body: HomePage(),
-      bottomNavigationBar: SafeArea(
-        child: Container(
+      bottomNavigationBar: Container(
           padding: EdgeInsets.all(12),
           margin: EdgeInsets.symmetric(horizontal: 24),
           decoration: BoxDecoration(
@@ -112,7 +114,6 @@ class _EntryPointState extends State<EntryPoint> {
             ],
           ),
         ),
-      ),
     );
   }
 }

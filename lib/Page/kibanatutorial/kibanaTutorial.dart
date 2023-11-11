@@ -11,7 +11,6 @@ class KibanaTutorial extends StatefulWidget {
 
 class _KibanaTutorial extends State<KibanaTutorial> {
   PetRepository repository = PetRepository();
-  Future<List<dynamic>> petList = Future<List<dynamic>>.value(null);
   List _imageUrls = [
     "assets/images/tutorial/1.png",
     "assets/images/tutorial/2.png",

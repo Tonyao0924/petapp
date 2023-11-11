@@ -1,21 +1,22 @@
+
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:petapp/Page/chatroom/chatroom.dart';
-import 'package:petapp/Page/login/loginPage.dart';
-import 'package:petapp/Page/petInfo/petInfoPage.dart';
-import 'package:petapp/Page/petInsert/petInsertPage.dart';
-import 'package:petapp/commonComponents/entryPoint.dart';
 import 'package:flutter/services.dart';
+import 'package:petapp/firebase/AuthService.dart';
 
 import 'Page/Home.dart';
 
-void main() {
+Future<void> main() async {
+
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
     systemNavigationBarColor: Colors.white,
     statusBarIconBrightness: Brightness.dark,
     systemNavigationBarIconBrightness: Brightness.dark,
   ));
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -32,14 +33,8 @@ class MyApp extends StatelessWidget {
       // home: const MyHomePage(title: 'Flutter Demo Home Page'),
       debugShowCheckedModeBanner: false,
       // home:  HomePage(),
-      home: const EntryPoint(),
-      routes: {
-        '/home':(context) => HomePage(),
-        '/login':(context) => const LoginPage(),
-        '/petInfo':(context) => PetInfoPage(),
-        '/petInsert':(context) => PetInsertPage(),
-        '/chatroom':(context) => ChatRoom(),
-      },
+      home: AuthService().handleAuthState(),
+      // home: LoginPage(),
     );
   }
 }
