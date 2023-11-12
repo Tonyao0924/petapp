@@ -22,7 +22,7 @@ class _FacebookSignInButtonState extends State<FacebookSignInButton> {
           ? const CircularProgressIndicator(
         valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
       )
-          : IconButton(icon: Image.asset('images/login/facebook.png'),iconSize: 50,
+          : IconButton(icon: Image.asset('assets/images/login/facebook.png'),iconSize: 50,
         onPressed: () async {
           setState(() {
             _isSigningIn = true;

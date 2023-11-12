@@ -1,8 +1,10 @@
 import 'package:petapp/Page/Home.dart';
+import 'package:petapp/commonComponents/entryPoint.dart';
 import 'package:petapp/model/userModel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../../firebase/AuthService.dart';
 import '../../firebase/auth/googleAuth.dart';
 import '../../service/currentUserInfoService.dart';
 
@@ -24,31 +26,12 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
           ? const CircularProgressIndicator(
         valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
       )
-          : IconButton(icon: Image.asset('/images/login/google.png'),iconSize: 50,
+          : IconButton(icon: Image.asset('assets/images/login/google.png'),iconSize: 50,
         onPressed: () async {
+          AuthService().signInWithGoogle(context);
           setState(() {
-            _isSigningIn = true;
-          });
-          User? user =
-          await GAuthentication.signInWithGoogle(context: context);
 
-          setState(() {
-            _isSigningIn = false;
           });
-          if (user != null) {
-            CurrentUserInfoService.loginUser = UserModel(
-                id: int.parse(user.uid),
-                username: user.displayName.toString(),
-                email: user.email.toString()
-            );
-            debugPrint(user.toString());
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(
-                  builder: (context) =>
-                      HomePage()
-              ),
-            );
-          }
         },
       ),
     );

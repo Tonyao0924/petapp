@@ -82,6 +82,7 @@ flutter:
   assets:
     - assets/images/
     - assets/images/login/
+    - assets/images/tutorial/
     - assets/avaters/
     - assets/Backgrounds/
     - assets/Icons/
