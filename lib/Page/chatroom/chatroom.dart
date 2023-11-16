@@ -122,6 +122,7 @@ class _ChatRoom extends State<ChatRoom>{
                     ),
                   ),
                 ),
+            Container(height: 100,)
           ],
         ),
     );

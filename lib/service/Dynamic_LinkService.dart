@@ -1,55 +1,49 @@
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
+import 'package:flutter/material.dart';
+import 'package:petapp/Page/login/loginPage.dart';
 
-class DynamicLinksApi {
-  final dynamicLink = FirebaseDynamicLinks.instance;
+import '../Page/petInfo/petInfoPage.dart';
+import '../Page/petInsert/pet_api.dart';
 
-  handleDynamicLink() async {
-    await dynamicLink.getInitialLink();
-    dynamicLink.onLink(onSuccess: (PendingDynamicLinkData data) async {
-      handleSuccessLinking(data);
-    }, onError: (OnLinkErrorException error) async {
-      print(error.message.toString());
+class DynamicLinkHandler {
+  late BuildContext context;
+  FirebaseDynamicLinks dynamicLinks = FirebaseDynamicLinks.instance;
+  DynamicLinkHandler(BuildContext context){
+    this.context = context;
+  }
+  Future<void> initDynamicLinks() async {
+    dynamicLinks.onLink.listen((dynamicLinkData) {
+      final String deepLink = dynamicLinkData.link.toString(); // Get DEEP LINK
+      final String path = dynamicLinkData.link.path; // Get PATH
+      if(deepLink.isEmpty)  return;
+      handleDeepLink(path,context);
+    }).onError((error) {
+      print('onLink error');
+      print(error.message);
     });
+    initUniLinks();
   }
-
-  Future<String> createReferralLink(String referralCode) async {
-    final DynamicLinkParameters dynamicLinkParameters = DynamicLinkParameters(
-      uriPrefix: 'https://heloo.page.link',
-      link: Uri.parse('https://asim123.com/refer?code=ref-12345'),
-      androidParameters: AndroidParameters(
-        packageName: 'com.devscore.flutter_tutorials',
-      ),
-      socialMetaTagParameters: SocialMetaTagParameters(
-        title: 'Refer A Friend',
-        description: 'Refer and earn',
-        imageUrl: Uri.parse(
-            'https://www.insperity.com/wp-content/uploads/Referral-_Program1200x600.png'),
-      ),
-    );
-
-    final ShortDynamicLink shortLink =
-    await dynamicLinkParameters.buildShortLink();
-
-    final Uri dynamicUrl = shortLink.shortUrl;
-    print(dynamicUrl);
-    return dynamicUrl.toString();
-  }
-
-  void handleSuccessLinking(PendingDynamicLinkData data) {
-    final Uri deepLink = data?.link;
-
-    if (deepLink != null) {
-      var isRefer = deepLink.pathSegments.contains('refer');
-      if (isRefer) {
-        var code = deepLink.queryParameters['code'];
-        print(code.toString());
-        if (code != null) {
-          GeneratedRoute.navigateTo(
-            SignUpView.routeName,
-            args: code,
-          );
-        }
-      }
+  Future<void> initUniLinks() async {
+    try {
+      final initialLink = await dynamicLinks.getInitialLink();
+      if(initialLink == null)  return;
+      handleDeepLink(initialLink.link.path,context);
+    } catch (e) {
+      // Error
     }
+  }
+  void handleDeepLink(String path,BuildContext context) {
+    PetRepository repository = PetRepository();
+    repository.getPetinfo(1).then((value) =>
+        Navigator.push(
+          context,MaterialPageRoute(
+          builder: (context) => PetInfoPage(),
+          settings: RouteSettings(
+            arguments: value, // 傳值過去PetInfoPage
+          ),
+        ),
+        ),
+    );
+    print(path);
   }
 }
