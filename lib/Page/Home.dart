@@ -13,7 +13,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePage extends State<HomePage> {
-
+ @override
+ void initState(){
+   DynamicLinkHandler dynamicLinkHandler = DynamicLinkHandler(context);
+   dynamicLinkHandler.initDynamicLinks();
+ }
   PetRepository repository = PetRepository();
   List imgUrllist = [];
   List _imageUrls = [
