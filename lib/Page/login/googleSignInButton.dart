@@ -26,7 +26,7 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
           ? const CircularProgressIndicator(
         valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
       )
-          : IconButton(icon: Image.asset('assets/images/login/google.png'),iconSize: 50,
+          : IconButton(icon: Image.asset('assets/images/login/google.png'),iconSize: 30,
         onPressed: () async {
           AuthService().signInWithGoogle(context);
           setState(() {

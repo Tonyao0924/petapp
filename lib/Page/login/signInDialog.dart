@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../../firebase/AuthService.dart';
 import '../../firebase/auth/googleAuth.dart';
 import 'facebookSignInButton.dart';
 import 'googleSignInButton.dart';
@@ -23,8 +24,8 @@ class SignInDialog {
       transitionDuration: const Duration(milliseconds: 400),
       pageBuilder: (_, __, ___) {
         return Center(
-          child:SingleChildScrollView(child: Container(
-            height: 620,
+          child: Container(
+            height: 720,
             margin: const EdgeInsets.symmetric(horizontal: 16),
             padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 24),
             decoration: BoxDecoration(
@@ -102,45 +103,62 @@ class SignInDialog {
                         ],
                       ),
                       SizedBox(height: 20,),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children:  [
-                          FutureBuilder(
-                            future:
-                            GAuthentication.initializeFirebase(context: context),
-                            builder: (context, snapshot) {
-                              if (snapshot.hasError) {
-                                return const Text('Error initializing Firebase');
-                              } else if (snapshot.connectionState ==
-                                  ConnectionState.done) {
-                                return const GoogleSignInButton();
-                              }
-                              return const CircularProgressIndicator(
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                    Color(0xFFF57C00)
-                                ),
-                              );
-                            },
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.center,
+                      //   children:  [
+                      //     // FutureBuilder(
+                      //     //   future:
+                      //     //   GAuthentication.initializeFirebase(context: context),
+                      //     //   builder: (context, snapshot) {
+                      //     //     if (snapshot.hasError) {
+                      //     //       return const Text('Error initializing Firebase');
+                      //     //     } else if (snapshot.connectionState ==
+                      //     //         ConnectionState.done) {
+                      //     //       return const GoogleSignInButton();
+                      //     //     }
+                      //     //     return const CircularProgressIndicator(
+                      //     //       valueColor: AlwaysStoppedAnimation<Color>(
+                      //     //           Color(0xFFF57C00)
+                      //     //       ),
+                      //     //     );
+                      //     //   },
+                      //     // ),
+                      //     // FutureBuilder(
+                      //     //   future:
+                      //     //   GAuthentication.initializeFirebase(context: context),
+                      //     //   builder: (context, snapshot) {
+                      //     //     if (snapshot.hasError) {
+                      //     //       return const Text('Error initializing Firebase');
+                      //     //     } else if (snapshot.connectionState ==
+                      //     //         ConnectionState.done) {
+                      //     //       return const FacebookSignInButton();
+                      //     //     }
+                      //     //     return const CircularProgressIndicator(
+                      //     //       valueColor: AlwaysStoppedAnimation<Color>(
+                      //     //           Color(0xFFF57C00)
+                      //     //       ),
+                      //     //     );
+                      //     //   },
+                      //     // ),
+                      //
+                      //   ],
+                      //
+                      // ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.white.withOpacity(0.85),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
                           ),
-                          FutureBuilder(
-                            future:
-                            GAuthentication.initializeFirebase(context: context),
-                            builder: (context, snapshot) {
-                              if (snapshot.hasError) {
-                                return const Text('Error initializing Firebase');
-                              } else if (snapshot.connectionState ==
-                                  ConnectionState.done) {
-                                return const FacebookSignInButton();
-                              }
-                              return const CircularProgressIndicator(
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                    Color(0xFFF57C00)
-                                ),
-                              );
-                            },
-                          ),
-                        ],
-
+                          minimumSize: Size(300, 55),
+                        ),
+                        child: Image.asset(
+                          "assets/images/login/google.png",
+                          width: 24, // 根据需要调整图像的宽度
+                          height: 24, // 根据需要调整图像的高度
+                        ),                            onPressed: () {
+                        AuthService().signInWithGoogle(context);
+                      },
                       ),
                       Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -168,7 +186,7 @@ class SignInDialog {
                 ],
               ),
             ),
-          ),),
+          ),
 
         );
       },

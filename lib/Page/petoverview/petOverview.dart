@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../../commonComponents/entryPoint.dart';
 import '../petInsert/pet_api.dart';
 import '../petlist/petList.dart';
 
@@ -10,7 +11,13 @@ class PetOverview extends StatefulWidget {
 
 class _PetOverview extends State<PetOverview> {
   PetRepository repository = PetRepository();
-  Future<List<dynamic>> petList = Future<List<dynamic>>.value(null);
+  // Future<List<dynamic>> petList = Future<List<dynamic>>.value(null);
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,19 +37,13 @@ class _PetOverview extends State<PetOverview> {
               color: Colors.black,
             ),
             onTap: () {
-              Navigator.pop(context);
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => EntryPoint()),
+                    (route) => false,
+              );
             },
           ),
-          actions: <Widget>[
-            IconButton(
-              icon: const Icon(Icons.menu),
-              tooltip: 'menu',
-              onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('This is a menu')));
-              },
-            ),
-          ],
         ),
         body: Scrollbar(
             thumbVisibility: true,

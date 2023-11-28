@@ -39,10 +39,6 @@ class AuthService{
       idToken: googleAuth.idToken,
     );
     Navigator.of(context).pop();
-    Navigator.of(context).pushAndRemoveUntil(
-        new MaterialPageRoute(
-            builder: (context) => EntryPoint()),
-            (route) => route == null);
     return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 

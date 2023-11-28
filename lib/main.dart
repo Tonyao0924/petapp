@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:petapp/commonComponents/entryPoint.dart';
 import 'package:petapp/firebase/AuthService.dart';
 import 'package:petapp/service/Dynamic_LinkService.dart';
 
@@ -32,9 +33,10 @@ class MyApp extends StatelessWidget {
       ),
       // home: const MyHomePage(title: 'Flutter Demo Home Page'),
       debugShowCheckedModeBanner: false,
-      home:  HomePage(),
+      // home:  HomePage(),
       //home: AuthService().handleAuthState(),
       // home: LoginPage(),
+       home: EntryPoint(),
     );
   }
 }
