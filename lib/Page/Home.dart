@@ -5,17 +5,22 @@ import 'package:petapp/Page/petInsert/petInsertPage.dart';
 import 'package:petapp/Page/petInsert/pet_api.dart';
 import 'package:petapp/Page/petoverview/petOverview.dart';
 
+import '../service/Dynamic_LinkService.dart';
+
 class HomePage extends StatefulWidget {
   @override
   _HomePage createState() => _HomePage();
 }
 
 class _HomePage extends State<HomePage> {
+ @override
+ void initState(){
+   DynamicLinkHandler dynamicLinkHandler = DynamicLinkHandler(context);
+   dynamicLinkHandler.initDynamicLinks();
+ }
   PetRepository repository = PetRepository();
   List imgUrllist = [];
-  List _imageUrls = [
-    'http://140.125.207.230:8000/media/images/LINE_ALBUM_%E8%88%87%E5%AE%B6%E4%BA%BA%E5%80%91%E7%9A%84%E5%9B%9E%E6%86%B6_230228_47.jpg',
-  ];
+  List _imageUrls = [];
   List _GoodPetinfo = [];
   @override
   Widget build(BuildContext context) {
@@ -182,7 +187,8 @@ class _HomePage extends State<HomePage> {
                                                     borderRadius: BorderRadius.circular(50)
                                                   ),
                                                   child:
-                                                  Image.network(snapshot.data![0]['image']),
+                                                  Image.network(snapshot.data![0]['image'],
+                                                    fit: BoxFit.cover,),
                                                 ),
                                                 Container(
                                                   margin: EdgeInsets.only(
@@ -247,7 +253,8 @@ class _HomePage extends State<HomePage> {
                                                       borderRadius: BorderRadius.circular(50)
                                                   ),
                                                   child:
-                                                  Image.network(snapshot.data![1]['image']),
+                                                  Image.network(snapshot.data![1]['image'],
+                                                    fit: BoxFit.cover,),
                                                 ),
                                                 Container(
                                                   margin: EdgeInsets.only(

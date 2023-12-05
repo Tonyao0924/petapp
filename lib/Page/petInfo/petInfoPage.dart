@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:petapp/Page/petlist/petList.dart';
+import 'package:petapp/Page/petoverview/petOverview.dart';
 
+import '../petEdit/petEditPage.dart';
 import '../petInsert/pet_api.dart';
 
 class PetInfoPage extends StatefulWidget {
@@ -10,10 +13,11 @@ class PetInfoPage extends StatefulWidget {
 
 class _PetInfoPage extends State<PetInfoPage> {
   PetRepository repository = PetRepository();
-  bool read = true;
+   bool read = true;
 
   @override
   Widget build(BuildContext context) {
+
     final Petinfo = ModalRoute.of(context)!.settings.arguments as Map<String,dynamic>;
     var gender = "";
     var is_neutered = "";
@@ -45,19 +49,13 @@ class _PetInfoPage extends State<PetInfoPage> {
               color: Colors.black,
             ),
             onTap: () {
-              Navigator.pop(context);
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => PetOverview()),
+                    (route) => false,
+              );
             },
           ),
-          actions: <Widget>[
-            IconButton(
-              icon: const Icon(Icons.menu),
-              tooltip: 'menu',
-              onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('This is a menu')));
-              },
-            ),
-          ],
         ),
         body: Scrollbar(
           thumbVisibility: true,
@@ -126,7 +124,7 @@ class _PetInfoPage extends State<PetInfoPage> {
                                 left: 0, top: 20, right: 0, bottom: 0),
                             child: TextFormField(
                                 initialValue: Petinfo['name'],
-                                readOnly: read,
+                                readOnly: true,
                                 keyboardType: TextInputType.text,
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
@@ -186,7 +184,7 @@ class _PetInfoPage extends State<PetInfoPage> {
                                     // 请求成功，显示数据
                                     return TextFormField(
                                         initialValue: snapshot.data['typename'],
-                                        readOnly: read,
+                                        readOnly: true,
                                         keyboardType: TextInputType.text,
                                         decoration: InputDecoration(
                                           border: InputBorder.none,
@@ -243,7 +241,7 @@ class _PetInfoPage extends State<PetInfoPage> {
                                 left: 0, top: 10, right: 0, bottom: 0),
                             child: TextFormField(
                                 initialValue: Petinfo['birthday'],
-                                readOnly: read,
+                                readOnly: true,
                                 keyboardType: TextInputType.text,
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
@@ -292,7 +290,7 @@ class _PetInfoPage extends State<PetInfoPage> {
                                 left: 0, top: 10, right: 0, bottom: 0),
                             child: TextFormField(
                                 initialValue: gender, //後端需要新增一個性別的key
-                                readOnly: read,
+                                readOnly: true,
                                 keyboardType: TextInputType.text,
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
@@ -341,7 +339,7 @@ class _PetInfoPage extends State<PetInfoPage> {
                                 left: 0, top: 10, right: 0, bottom: 0),
                             child: TextFormField(
                                 initialValue: Petinfo['weight'], // 後端需要新增一個體重的key
-                                readOnly: read,
+                                readOnly: true,
                                 keyboardType: TextInputType.text,
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
@@ -389,7 +387,7 @@ class _PetInfoPage extends State<PetInfoPage> {
                                 left: 0, top: 10, right: 0, bottom: 0),
                             child: TextFormField(
                                 initialValue: Petinfo['activity_level'], // 後端需要新增一個體重的key
-                                readOnly: read,
+                                readOnly: true,
                                 keyboardType: TextInputType.text,
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
@@ -438,7 +436,7 @@ class _PetInfoPage extends State<PetInfoPage> {
                                 left: 0, top: 10, right: 0, bottom: 0),
                             child: TextFormField(
                                 initialValue: is_neutered, // 後端需要新增一個絕育的key
-                                readOnly: read,
+                                readOnly: true,
                                 keyboardType: TextInputType.text,
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
@@ -472,7 +470,7 @@ class _PetInfoPage extends State<PetInfoPage> {
                                 left: 0, top: 15, right: 0, bottom: 0),
                             child: TextFormField(
                               initialValue: Petinfo['content'],
-                              readOnly: read,
+                              readOnly: true,
                                 keyboardType: TextInputType.multiline,
                                 maxLines: 8,
                                 decoration: InputDecoration(
@@ -525,11 +523,16 @@ class _PetInfoPage extends State<PetInfoPage> {
                                                 BorderRadius.circular(
                                                     18.76)))),
                                     onPressed: () {
-                                      if(read == true){
-                                        read = false;
-                                      }else{
-                                        read = true;
-                                      }
+                                      repository.getPetinfo(Petinfo['id']).then((value) =>
+                                          Navigator.push(
+                                            context,MaterialPageRoute(
+                                            builder: (context) => PetEditPage(),
+                                            settings: RouteSettings(
+                                              arguments: value, // 傳值過去PetInfoPage
+                                            ),
+                                          ),
+                                          ),
+                                      );
                                     },
                                     child: Text(
                                       '編輯資訊',
