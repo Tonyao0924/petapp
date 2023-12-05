@@ -1,16 +1,17 @@
-
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:petapp/commonComponents/entryPoint.dart';
 import 'package:petapp/firebase/AuthService.dart';
+import 'package:petapp/service/Dynamic_LinkService.dart';
 
 import 'Page/Home.dart';
 
 Future<void> main() async {
-
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+ WidgetsFlutterBinding.ensureInitialized();
+ await Firebase.initializeApp();
+ SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
     systemNavigationBarColor: Colors.white,
     statusBarIconBrightness: Brightness.dark,
@@ -33,8 +34,9 @@ class MyApp extends StatelessWidget {
       // home: const MyHomePage(title: 'Flutter Demo Home Page'),
       debugShowCheckedModeBanner: false,
       // home:  HomePage(),
-      home: AuthService().handleAuthState(),
+      //home: AuthService().handleAuthState(),
       // home: LoginPage(),
+       home: EntryPoint(),
     );
   }
 }

@@ -12,8 +12,7 @@ class _LoginPage extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
-        body: SingleChildScrollView(
-          child: Container(
+        body: Container(
             child: Column(
               children: <Widget>[
                 const SizedBox(
@@ -45,6 +44,7 @@ class _LoginPage extends State<LoginPage> {
                     ),
                   ),
                 ),
+                Spacer(),
                 Padding(
                   padding: EdgeInsets.all(20),
                   child: Center(
@@ -59,11 +59,12 @@ class _LoginPage extends State<LoginPage> {
                     ),
                   ),
                 ),
-                SizedBox(height: 20,),
+                Spacer(),
                 GetStart(),
+                Spacer(),
               ],
             ),
           ),
-        ));
+        );
   }
 }

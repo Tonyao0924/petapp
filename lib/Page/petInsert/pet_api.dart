@@ -6,7 +6,8 @@ import 'package:petapp/Api/ApiInfo.dart';
 
 import '../../model/Pet.dart';
 abstract class ApiPetData {
-  Future<String> createPet(FormData body);
+  Future<bool> createPet(FormData body);
+  Future<bool> editPet(FormData body,String id);
 
   Future<List<dynamic>> getPetList(String type);
   Future<List<dynamic>> getPetListAll();
@@ -22,22 +23,35 @@ class PetRepository implements ApiPetData {
   final String domain = ApiInfo.domain;
 
   @override
-  Future<String> createPet(FormData body) async {
+  Future<bool> createPet(FormData body) async {
     final dio = Dio();
     var headers = {
       'Content-Type': 'application/json'
     };
     final response = await dio.post('$domain/pet/', data: body);
-    // var request = http.Request('POST', Uri.parse('$domain/pet/'));
-    // request.body = body;
-    // request.headers.addAll(headers);
-    // http.StreamedResponse response = await request.send();`
-
-    if (response.statusCode == 200) {
-      return await response.data.toString();
+    print(response.statusCode );
+    if (response.statusCode == 201) {
+      return true;
     }
     else {
-      return await response.data.toString();
+      return false;
+    }
+  }
+  @override
+  Future<bool> editPet(FormData body,String id) async {
+    final dio = Dio();
+    var headers = {
+      'Content-Type': 'application/json'
+    };
+
+    print('$domain/pet/$id/');
+    final response = await dio.patch('$domain/pet/$id/', data: body);
+    print(response.statusCode);
+    if (response.statusCode == 200) {
+      return true;
+    }
+    else {
+      return false;
     }
   }
 
@@ -49,7 +63,7 @@ class PetRepository implements ApiPetData {
 
     if (response.statusCode == 200) {
       // 成功接收到資料
-      var data = json.decode(response.body); // 取得回傳的資料內容
+      var data = json.decode(utf8.decode(response.bodyBytes)); // 取得回傳的資料內容
       print("data");
       print(data);
       // 在這裡處理資料
@@ -68,7 +82,7 @@ class PetRepository implements ApiPetData {
 
     if (response.statusCode == 200) {
       // 成功接收到資料
-      var data = json.decode(response.body); // 取得回傳的資料內容
+      var data = json.decode(utf8.decode(response.bodyBytes)); // 取得回傳的資料內容
       print("data");
       print(data);
       // 在這裡處理資料
@@ -86,7 +100,7 @@ class PetRepository implements ApiPetData {
 
     if (response.statusCode == 200) {
       // 成功接收到資料
-      var data = json.decode(response.body); // 取得回傳的資料內容
+      var data = json.decode(utf8.decode(response.bodyBytes)); // 取得回傳的資料內容
       print("info");
       print(data);
       // 在這裡處理資料
@@ -104,7 +118,7 @@ class PetRepository implements ApiPetData {
 
     if (response.statusCode == 200) {
       // 成功接收到資料
-      var data = json.decode(response.body); // 取得回傳的資料內容
+      var data = json.decode(utf8.decode(response.bodyBytes)); // 取得回傳的資料內容
       print("type");
       print(data);
       // 在這裡處理資料

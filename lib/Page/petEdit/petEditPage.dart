@@ -7,27 +7,26 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:petapp/Page/Home.dart';
+import 'package:petapp/Page/petInfo/petInfoPage.dart';
 import 'package:petapp/Page/petInsert/pet_api.dart';
 import 'package:petapp/Page/petInsert/upload_image_widget.dart';
-import '../../commonComponents/entryPoint.dart';
-import '../../model/Pet.dart';
-class PetInsertPage extends StatefulWidget {
+class PetEditPage extends StatefulWidget {
   @override
-  _PetInsertPage createState() => _PetInsertPage();
+  _PetEditPage createState() => _PetEditPage();
 }
 
-class _PetInsertPage extends State<PetInsertPage> {
+class _PetEditPage extends State<PetEditPage> {
   String _path = "";
   String name = "";
   int keeper = 0;
   int type = 0;
+  String id = '';
   String birthday = "";
   String content = "";
   PetRepository repository = PetRepository();
+  List<String> petTypes = ['狗', '貓', '鼠', '其他'];
   int selectedType = 1;
-  String nowselectedType = '狗';
-  List<String> petTypes = ['狗', '猫', '鼠', '其他'];
+  String nowselectedType ='';
   bool selectedpetGender = true;
   String nowselectedpetGender = '公';
   List<String> petGender = ['公','母'];
@@ -35,6 +34,7 @@ class _PetInsertPage extends State<PetInsertPage> {
   List<bool> is_neutered = [true,false];
   String selectedpetactivity_level = 'low';
   List<String> activity_level = ['low','moderate','high'];
+  String image = '';
   final TextEditingController Namecontroller = TextEditingController();
   final TextEditingController Keepercontroller = TextEditingController();
   final TextEditingController Typecontroller = TextEditingController();
@@ -42,6 +42,7 @@ class _PetInsertPage extends State<PetInsertPage> {
   final TextEditingController Weightcontroller = TextEditingController();
   final dateFormatter = DateFormat('yyyy-MM-dd');
   late DateTime selectedDateTime;
+  bool _initialized = false;
   @override
   void initState() {
     super.initState();
@@ -49,8 +50,48 @@ class _PetInsertPage extends State<PetInsertPage> {
     selectedDateTime = now;
   }
   @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
+  Widget build(BuildContext contex) {
+    if(!_initialized){
+      final Petinfo = ModalRoute
+          .of(context)!
+          .settings
+          .arguments as Map<String, dynamic>;
+
+      // 剩下的初始化逻辑
+      Namecontroller.text = Petinfo['name'];
+      Keepercontroller.text = Petinfo['keeper'].toString();
+      selectedDateTime = DateTime.parse(Petinfo['birthday']);
+      selectedType = Petinfo['type'];
+      print(Petinfo['type']);
+      switch (Petinfo['type']) {
+        case 1:
+          nowselectedType = "狗";
+          break;
+        case 2:
+          nowselectedType = "貓";
+          break;
+        case 3:
+          nowselectedType = "鼠";
+          break;
+        case 4:
+          nowselectedType = "其他";
+          break;
+      }
+      selectedpetGender = Petinfo['gender'];
+      if(Petinfo['gender']) {
+        nowselectedpetGender = '公';
+      }else{
+        nowselectedpetGender = '母';
+      }
+      Contentcontroller.text = Petinfo['content'];
+      Weightcontroller.text = Petinfo['weight'];
+      selectedpetis_neutered = Petinfo['is_neutered'];
+      selectedpetactivity_level = Petinfo['activity_level'];
+      _initialized = true;
+      image = Petinfo['image'];
+      id = Petinfo['id'].toString();
+    }
+
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
@@ -66,13 +107,19 @@ class _PetInsertPage extends State<PetInsertPage> {
               color: Colors.black,
             ),
             onTap: () {
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (context) => EntryPoint()),
-                    (route) => false,
-              );
+              Navigator.pop(context);
             },
           ),
+          actions: <Widget>[
+            IconButton(
+              icon: const Icon(Icons.menu),
+              tooltip: 'menu',
+              onPressed: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('This is a menu')));
+              },
+            ),
+          ],
         ),
         body:
         Scrollbar(
@@ -104,34 +151,7 @@ class _PetInsertPage extends State<PetInsertPage> {
                           EdgeInsets.only(left: 30, top: 30, right: 20, bottom: 0),
                           color: Colors.grey,
                           child: Center(
-                            child: UploadImageWidget(
-                              onImagePicked: (path) {
-                                setState(() {
-                                  _path = path;
-                                });
-                              },
-                              child: _path == ""
-                                  ? Container(
-                                height: 100,
-                                width: 100,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(13),
-                                  color: const Color(0xFFCCCCCC),
-                                ),
-                                child: Icon(Icons.collections_outlined),
-                              )
-                                  : SizedBox(
-                                height: 100,
-                                width: 100,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(13),
-                                  child: Image.file(
-                                    File(_path),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                            ),
+                            child: Image.network(image),
                           ),
                           width: 142,
                           height: 120,
@@ -171,15 +191,15 @@ class _PetInsertPage extends State<PetInsertPage> {
                                 alignment:Alignment.centerLeft,
                                 width: 200,
                                 margin: const EdgeInsets.only(
-                                        left: 0, top: 14, right: 0, bottom: 0),
-                              decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(15),
-                                          border: Border.all(
-                                          color: Color(0xFFDADADA),
-                                          width: 1.0,
-                                          style: BorderStyle.solid
-                                          ),
-                                        ),
+                                    left: 0, top: 14, right: 0, bottom: 0),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  border: Border.all(
+                                      color: Color(0xFFDADADA),
+                                      width: 1.0,
+                                      style: BorderStyle.solid
+                                  ),
+                                ),
                                 child: TextButton(
                                   child: Text(
                                     dateFormatter.format(selectedDateTime),
@@ -219,7 +239,6 @@ class _PetInsertPage extends State<PetInsertPage> {
                                 value: nowselectedType,
                                 onChanged: (newValue) {
                                   setState(() {
-                                    print(newValue);
                                     nowselectedType = newValue!;
                                     switch(newValue){
                                       case '狗':
@@ -526,17 +545,16 @@ class _PetInsertPage extends State<PetInsertPage> {
                                         'type': selectedType,
                                         'birthday':dateFormatter.format(selectedDateTime),
                                         'content': Contentcontroller.text,
-                                        'image': await MultipartFile.fromFile(_path, filename: Namecontroller.text+'.jpg'),
                                         'weight': Weightcontroller.text,
                                         'gender': selectedpetGender,
                                         'is_neutered': selectedpetis_neutered,
                                         'activity_level': selectedpetactivity_level,
                                       });
-                                      if(await repository.createPet(PetCreateformdata)){
-                                        showinsertsuccess(context);
+                                      if(await repository.editPet(PetCreateformdata,id)){
+                                        showeditsuccess(context,repository,int.parse(id));
                                       }
                                       else{
-                                        showinsertfail(context);
+                                        print("object");
                                       }
                                     },
                                     child: Text(
@@ -559,47 +577,27 @@ class _PetInsertPage extends State<PetInsertPage> {
   }
 }
 
-Future<void> showinsertsuccess(BuildContext context) {
+Future<void> showeditsuccess(BuildContext context,PetRepository repository,int id) {
   return showDialog<void>(
     context: context,
     builder: (BuildContext context) {
       return
         AlertDialog(
-          title: Text('寵物新增成功'),
-          content: const Text('新增成功'),
+          title: Text('寵物資訊編輯成功'),
+          content: const Text('編輯成功'),
           actions: <Widget>[
             TextButton(
               child: const Text('確認'),
               onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => PetInsertPage()),
-                );
-              },
-            ),
-          ],
-        );
-    },
-  );
-}
-
-Future<void> showinsertfail(BuildContext context) {
-  return showDialog<void>(
-    context: context,
-    builder: (BuildContext context) {
-      return
-        AlertDialog(
-          title: Text('寵物新增失敗'),
-          content: const Text('新增失敗'),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('確認'),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => PetInsertPage()),
+                repository.getPetinfo(id).then((value) =>
+                    Navigator.push(
+                      context,MaterialPageRoute(
+                      builder: (context) => PetInfoPage(),
+                      settings: RouteSettings(
+                        arguments: value, // 傳值過去PetInfoPage
+                      ),
+                    ),
+                    ),
                 );
               },
             ),
